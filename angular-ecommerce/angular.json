@@ -82,6 +82,9 @@
         "test": {
           "builder": "@angular/build:unit-test"
         }
+      },
+      "i18n": {
+        "sourceLocale": "de-DE"
       }
     }
   }
