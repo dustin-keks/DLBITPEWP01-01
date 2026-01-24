@@ -1,5 +1,5 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -18,7 +18,7 @@ import { ProductService } from './services/product-service';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withHttpTransferCacheOptions({})),
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
     ProductService
   ],
