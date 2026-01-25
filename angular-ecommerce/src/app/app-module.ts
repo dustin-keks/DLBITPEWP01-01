@@ -6,15 +6,6 @@ import { App } from './app';
 import { ProductList } from './components/product-list/product-list';
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { ProductService } from './services/product-service';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  {path: 'category/:id', component: ProductList},
-  {path: 'category', component: ProductList},
-  {path: 'products', component: ProductList},
-  {path: '', redirectTo: '/products', pathMatch: 'full'},
-  {path: '**', redirectTo: '/products', pathMatch: 'full'}
-];
 
 @NgModule({
   declarations: [
@@ -23,8 +14,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(routes)
+    AppRoutingModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
