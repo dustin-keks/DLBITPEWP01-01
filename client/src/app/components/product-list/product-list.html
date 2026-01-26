@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- loop over products -->
+        <div *ngFor="let tempProduct of products" class="col-6 col-md-4 col-xl-3">
+            <div class="product-box">
+                <img src="{{ tempProduct.imageUrl }}" class="img-fluid">
+                <h1>{{ tempProduct.name }}</h1>
+                <p>{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
+                <a href="#" class="btn btn-primary">
+                    In den Warenkorb
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
