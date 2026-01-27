@@ -1,1 +1,7 @@
-<p>product-category-menu works!</p>
+<div class="list-group">
+    @for (tempProductCategory of productCategories; track tempProductCategory.id) {
+        <a routerLink="/category/{{ tempProductCategory.id }}" routerLinkActive="active" class="list-group-item list-group-item-action">
+            {{ tempProductCategory.categoryName }}
+        </a>
+    }
+</div>
