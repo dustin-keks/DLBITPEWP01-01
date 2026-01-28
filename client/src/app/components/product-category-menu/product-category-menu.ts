@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ProductCategory } from '../../common/product-category';
 import { ProductService } from '../../services/product-service';
@@ -9,12 +9,12 @@ import { ProductService } from '../../services/product-service';
   templateUrl: './product-category-menu.html',
   styleUrl: './product-category-menu.css',
 })
-export class ProductCategoryMenu {
+export class ProductCategoryMenu implements OnInit {
   productCategories: ProductCategory[] = [];
 
   constructor(private productService: ProductService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.listProductCategories();
   }
 
