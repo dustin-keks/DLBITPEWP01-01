@@ -4,8 +4,10 @@
         @for (tempProduct of products; track tempProduct.id) {
             <div class="col-6 col-md-4 col-xl-3">
                 <div class="product-box">
-                    <img src="{{ tempProduct.imageUrl }}" class="img-fluid">
-                    <h1>{{ tempProduct.name }}</h1>
+                    <a routerLink="/products/{{ tempProduct.id }}">
+                        <img src="{{ tempProduct.imageUrl }}" class="img-fluid" alt="{{ tempProduct.name }}">
+                    </a>
+                    <h2>{{ tempProduct.name }}</h2>
                     <p>{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
                     <a href="#" class="btn btn-primary">
                         In den Warenkorb
