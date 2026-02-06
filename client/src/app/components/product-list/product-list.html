@@ -25,4 +25,16 @@
             </div>
         }
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <!-- pagination -->
+            <ngb-pagination
+                [(page)]="thePageNumber"
+                [pageSize]="thePageSize"
+                [collectionSize]="theTotalElements"
+                (pageChange)="listProducts()">
+            </ngb-pagination>
+        </div>
+    </div>
 </div>
