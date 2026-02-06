@@ -79,7 +79,7 @@ export class ProductList implements OnInit {
       this.thePageNumber = 1;
     }
 
-    this.previousCategoryId = this.previousCategoryId;
+    this.previousCategoryId = this.currentCategoryId;
 
     console.log(`currentCategoryId = ${this.currentCategoryId}, thePageNumber = ${this.thePageNumber}`);
 
