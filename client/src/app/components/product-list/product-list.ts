@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../../common/product';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NgbModule],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
