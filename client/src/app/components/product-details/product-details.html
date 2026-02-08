@@ -5,10 +5,10 @@
         </div>
         <div class="col">
             <h1>{{ product.name }}</h1>
-            <p>{{ product.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
-            <a href="#" class="btn btn-primary">
+            <p>{{ product.unitPrice | currency:'EUR' }}</p>
+            <button role="button" class="btn btn-primary" (click)="addToCart()">
                 In den Warenkorb
-            </a>
+            </button>
 
             <hr>
             <h2>Beschreibung</h2>
