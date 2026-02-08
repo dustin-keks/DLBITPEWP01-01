@@ -26,15 +26,23 @@
         }
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <!-- pagination -->
+    <!-- pagination -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-auto">
             <ngb-pagination
                 [(page)]="thePageNumber"
                 [pageSize]="thePageSize"
                 [collectionSize]="theTotalElements"
                 (pageChange)="listProducts()">
             </ngb-pagination>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" aria-label="Items per page" #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
         </div>
     </div>
 </div>
