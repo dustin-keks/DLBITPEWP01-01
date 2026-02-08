@@ -2,15 +2,17 @@
     <!-- loop over products -->
     @for (tempProduct of products; track tempProduct.id) {
         <div class="col-6 col-md-4 col-xl-3">
-            <div class="product-box">
+            <div class="card mb-3">
                 <a routerLink="/products/{{ tempProduct.id }}">
-                    <img src="{{ tempProduct.imageUrl }}" class="img-fluid" alt="{{ tempProduct.name }}">
+                    <img src="{{ tempProduct.imageUrl }}" class="card-img-top" alt="{{ tempProduct.name }}">
                 </a>
-                <h2>{{ tempProduct.name }}</h2>
-                <p>{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
-                <a href="#" class="btn btn-primary">
-                    In den Warenkorb
-                </a>
+                <div class="card-body">
+                    <h2 class="h5 card-title">{{ tempProduct.name }}</h2>
+                    <p class="card-text">{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
+                    <button role="button" class="btn btn-primary" (click)="addToCart(tempProduct)">
+                        In den Warenkorb
+                    </button>
+                </div>
             </div>
         </div>
     }
