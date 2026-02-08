@@ -1,50 +1,48 @@
-<div class="container-fluid">
-    <div class="row">
-        <!-- loop over products -->
-        @for (tempProduct of products; track tempProduct.id) {
-            <div class="col-6 col-md-4 col-xl-3">
-                <div class="product-box">
-                    <a routerLink="/products/{{ tempProduct.id }}">
-                        <img src="{{ tempProduct.imageUrl }}" class="img-fluid" alt="{{ tempProduct.name }}">
-                    </a>
-                    <h2>{{ tempProduct.name }}</h2>
-                    <p>{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
-                    <a href="#" class="btn btn-primary">
-                        In den Warenkorb
-                    </a>
-                </div>
+<div class="row">
+    <!-- loop over products -->
+    @for (tempProduct of products; track tempProduct.id) {
+        <div class="col-6 col-md-4 col-xl-3">
+            <div class="product-box">
+                <a routerLink="/products/{{ tempProduct.id }}">
+                    <img src="{{ tempProduct.imageUrl }}" class="img-fluid" alt="{{ tempProduct.name }}">
+                </a>
+                <h2>{{ tempProduct.name }}</h2>
+                <p>{{ tempProduct.unitPrice | currency:'EUR':'symbol':'1.2-2':'de-DE' }}</p>
+                <a href="#" class="btn btn-primary">
+                    In den Warenkorb
+                </a>
             </div>
-        }
+        </div>
+    }
 
-        <!-- if products empty then display a message -->
-        @empty {
-            <div class="col">
-                <div class="alert alert-warning" role="alert">
-                    Es konnten keine Produkte gefunden werden.
-                </div>
+    <!-- if products empty then display a message -->
+    @empty {
+        <div class="col">
+            <div class="alert alert-warning" role="alert">
+                Es konnten keine Produkte gefunden werden.
             </div>
-        }
+        </div>
+    }
+</div>
+
+<!-- pagination -->
+<div class="row justify-content-center mt-3">
+    <div class="col-auto">
+        <ngb-pagination
+            [(page)]="thePageNumber"
+            [pageSize]="thePageSize"
+            [collectionSize]="theTotalElements"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChange)="listProducts()">
+        </ngb-pagination>
     </div>
-
-    <!-- pagination -->
-    <div class="row justify-content-center mt-3">
-        <div class="col-auto">
-            <ngb-pagination
-                [(page)]="thePageNumber"
-                [pageSize]="thePageSize"
-                [collectionSize]="theTotalElements"
-                [maxSize]="5"
-                [boundaryLinks]="true"
-                (pageChange)="listProducts()">
-            </ngb-pagination>
-        </div>
-        <div class="col-auto">
-            <select class="form-select" aria-label="Items per page" #myPageSelect (change)="updatePageSize(myPageSelect.value)">
-                <option value="5" selected>5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-            </select>
-        </div>
+    <div class="col-auto">
+        <select class="form-select" aria-label="Items per page" #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
     </div>
 </div>
