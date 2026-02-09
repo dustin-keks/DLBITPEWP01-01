@@ -3,12 +3,12 @@
         <span class="me-2 d-inline-block">
             {{ totalPrice | currency: 'EUR' }}
         </span>
-        <button type="button" class="btn btn-primary position-relative">
+        <a routerLink="/cart-details" class="btn btn-primary position-relative">
             <i class="bi bi-cart"></i>
             <span class="position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger">
                 {{ totalQuantity }}
                 <span class="visually-hidden">Produkte im Warenkorb</span>
             </span>
-        </button>
+        </a>
     </div>
 </div>
