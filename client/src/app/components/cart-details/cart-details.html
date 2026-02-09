@@ -1,1 +1,63 @@
-<p>cart-details works!</p>
+<h1>Warenkorb</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Produktbild</th>
+                <th scope="col">Produktname</th>
+                <th scope="col">Produktpreis</th>
+                <th scope="col">Anzahl</th>
+                <th scope="col">Zwischensumme</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @for (tempCartItem of cartItems; track tempCartItem.id) {
+                <tr>
+                    <td>
+                        <img src="{{ tempCartItem.imageUrl }}" class="img-fluid" alt="{{ tempCartItem.name }}" width="100" height="100">
+                    </td>
+                    <td>
+                        <h2 class="h5">{{ tempCartItem.name }}</h2>
+                    </td>
+                    <td>
+                        <p>{{ tempCartItem.unitPrice | currency:'EUR' }}</p>
+                    </td>
+                    <td>
+                        <p>{{ tempCartItem.quantity }}</p>
+                    </td>
+                    <td>
+                        <p>{{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'EUR' }}</p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="row justify-content-end">
+    <div class="col-12 col-sm-6">
+        <dl class="row">
+            <dt class="col-6">
+                Versand:
+            </dt>
+            <dd class="col-6">
+                kostenlos
+            </dd>
+
+            <dt class="col-6">
+                Gesamtanzahl:
+            </dt>
+            <dd class="col-6">
+                {{ totalQuantity }}
+            </dd>
+            
+            <dt class="col-6">
+                Gesamtsumme:
+            </dt>
+            <dd class="col-6">
+                {{ totalPrice | currency: 'EUR'}}
+            </dd>
+        </dl>
+    </div>
+</div>
