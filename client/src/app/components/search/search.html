@@ -4,9 +4,9 @@
             type="text" 
             placeholder="Produkte durchsuchen"
             aria-label="Produkte durchsuchen" 
-            (keyup.enter) = "doSearch(myInput.value)" />
+            (keyup.enter)="doSearch(myInput.value)" />
 
     <button class="btn btn-success" (click) = "doSearch(myInput.value)">
-        Suchen
+        <i class="bi bi-search"></i>
     </button>
 </div>
