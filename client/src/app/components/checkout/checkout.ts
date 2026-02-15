@@ -1,14 +1,18 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
 export class Checkout implements OnInit {
   checkoutFormGroup!: FormGroup;
+
+  totalPrice: number = 0;
+  totalQuantity: number = 0;
 
   constructor(private formBuilder: FormBuilder) {}
 

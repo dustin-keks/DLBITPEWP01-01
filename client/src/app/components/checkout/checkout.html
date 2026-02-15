@@ -120,6 +120,33 @@
             <label for="expiration-month">Ablaufdatum Jahr</label>
         </div>
     </div>
+    
+    <div class="row justify-content-end">
+        <div class="col-12 col-sm-6">
+            <dl class="row">
+                <dt class="col-6">
+                    Versand:
+                </dt>
+                <dd class="col-6">
+                    kostenlos
+                </dd>
+
+                <dt class="col-6">
+                    Gesamtanzahl:
+                </dt>
+                <dd class="col-6">
+                    {{ totalQuantity }}
+                </dd>
+                
+                <dt class="col-6">
+                    Gesamtsumme:
+                </dt>
+                <dd class="col-6">
+                    {{ totalPrice | currency: 'EUR'}}
+                </dd>
+            </dl>
+        </div>
+    </div>
 
     <div class="d-grid">
         <button type="submit" class="btn btn-success btn-lg">Absenden</button>
