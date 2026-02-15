@@ -24,6 +24,12 @@ export class Checkout implements OnInit {
         zipCode: [''],
         city: [''],
         country: ['']
+      }),
+      shippingAddress: this.formBuilder.group({
+        street: [''],
+        zipCode: [''],
+        city: [''],
+        country: ['']
       })
     });
   }

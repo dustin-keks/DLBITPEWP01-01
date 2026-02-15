@@ -48,5 +48,33 @@
         </div>
     </div>
 
+    <div formGroupName="shippingAddress">
+        <h2 class="h5">Lieferadresse</h2>
+
+        <div class="form-floating mb-3">
+            <input formControlName="street" type="text" class="form-control" id="shipping-street" placeholder="">
+            <label for="shipping-street">Straße und Hausnummer</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="zipCode" type="text" class="form-control" id="shipping-plz" placeholder="">
+            <label for="shipping-plz">Postleitzahl</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="city" type="text" class="form-control" id="shipping-city" placeholder="">
+            <label for="shipping-city">Stadt</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="country" class="form-select" id="shipping-country">
+                <option value="DEU">Deutschland</option>
+                <option value="AUT">Östereich</option>
+                <option value="CHE">Schweiz</option>
+            </select>
+            <label for="shipping-country">Land</label>
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-success">Absenden</button>
 </form>
