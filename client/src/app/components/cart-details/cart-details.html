@@ -10,6 +10,7 @@
                     <th scope="col">Produktpreis</th>
                     <th scope="col">Anzahl</th>
                     <th scope="col">Zwischensumme</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -35,6 +36,11 @@
                         </td>
                         <td>
                             <p>{{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'EUR' }}</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" (click)="remove(tempCartItem)">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 }
