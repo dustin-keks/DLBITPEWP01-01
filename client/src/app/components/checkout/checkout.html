@@ -1,1 +1,10 @@
-<p>checkout works!</p>
+<h1>Kundendaten</h1>
+
+<form [formGroup]="checkoutFormGroup">
+    <div formGroupName="customer" class="form-floating mb-3">
+        <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="">
+        <label for="first-name">Vorname</label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Absenden</button>
+</form>
