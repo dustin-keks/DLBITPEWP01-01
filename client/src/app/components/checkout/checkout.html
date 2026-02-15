@@ -76,5 +76,52 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-success">Absenden</button>
+    <div formGroupName="creditCard">
+        <h2 class="h5">Kreditkarte</h2>
+
+        <div class="form-floating mb-3">
+            <select formControlName="cardType" class="form-select" id="card-type">
+                <option value="Visa">Visa</option>
+                <option value="Master">Master</option>
+            </select>
+            <label for="card-type">Kartentyp</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="nameOnCard" type="text" class="form-control" id="cc-name" placeholder="">
+            <label for="cc-name">Kartenname</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="cardNumber" type="text" class="form-control" id="cc-number" placeholder="">
+            <label for="cc-number">Kartennummer</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="securityCode" type="text" class="form-control" id="security-code" placeholder="">
+            <label for="security-code">Sicherheitscode (3-stellig)</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="expirationMonth" class="form-select" id="expiration-month">
+                <option value="01">Januar</option>
+                <option value="02">Februar</option>
+                <option value="03">März</option>
+            </select>
+            <label for="expiration-month">Ablaufdatum Monat</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="expirationYear" class="form-select" id="expiration-year">
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+            </select>
+            <label for="expiration-month">Ablaufdatum Jahr</label>
+        </div>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg">Absenden</button>
+    </div>
 </form>

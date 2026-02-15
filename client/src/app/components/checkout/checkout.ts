@@ -30,6 +30,14 @@ export class Checkout implements OnInit {
         zipCode: [''],
         city: [''],
         country: ['']
+      }),
+      creditCard: this.formBuilder.group({
+        cardType: [''],
+        nameOnCard: [''],
+        cardNumber: [''],
+        securityCode: [''],
+        expirationMonth: [''],
+        expirationYear: ['']
       })
     });
   }
