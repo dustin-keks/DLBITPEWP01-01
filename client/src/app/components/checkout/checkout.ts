@@ -18,6 +18,12 @@ export class Checkout implements OnInit {
         firstName: [''],
         lastName: [''],
         email: ['']
+      }),
+      billingAddress: this.formBuilder.group({
+        street: [''],
+        zipCode: [''],
+        city: [''],
+        country: ['']
       })
     });
   }

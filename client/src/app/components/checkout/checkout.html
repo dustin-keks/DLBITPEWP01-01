@@ -1,7 +1,9 @@
-<h1>Kundendaten</h1>
+<h1 class="border-bottom pb-3 mb-3">Kasse</h1>
 
 <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
     <div formGroupName="customer">
+        <h2 class="h5">Kundendaten</h2>
+
         <div class="form-floating mb-3">
             <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="">
             <label for="first-name">Vorname</label>
@@ -15,6 +17,34 @@
         <div class="form-floating mb-3">
             <input formControlName="email" type="email" class="form-control" id="email" placeholder="">
             <label for="email">E-Mail</label>
+        </div>
+    </div>
+
+    <div formGroupName="billingAddress">
+        <h2 class="h5">Rechnungsadresse</h2>
+
+        <div class="form-floating mb-3">
+            <input formControlName="street" type="text" class="form-control" id="billing-street" placeholder="">
+            <label for="billing-street">Straße und Hausnummer</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="zipCode" type="text" class="form-control" id="billing-plz" placeholder="">
+            <label for="billing-plz">Postleitzahl</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input formControlName="city" type="text" class="form-control" id="billing-city" placeholder="">
+            <label for="billing-city">Stadt</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="country" class="form-select" id="billing-country">
+                <option value="DEU">Deutschland</option>
+                <option value="AUT">Östereich</option>
+                <option value="CHE">Schweiz</option>
+            </select>
+            <label for="billing-country">Land</label>
         </div>
     </div>
 
