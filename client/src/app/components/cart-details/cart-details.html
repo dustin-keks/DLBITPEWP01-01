@@ -25,7 +25,13 @@
                             <p>{{ tempCartItem.unitPrice | currency:'EUR' }}</p>
                         </td>
                         <td>
-                            <p>{{ tempCartItem.quantity }}</p>
+                            <button class="btn btn-sm btn-primary me-1" (click)="decrementQuantity(tempCartItem)">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            {{ tempCartItem.quantity }}
+                            <button class="btn btn-sm btn-primary ms-1" (click)="incrementQuantity(tempCartItem)">
+                                <i class="bi bi-plus"></i>
+                            </button>
                         </td>
                         <td>
                             <p>{{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'EUR' }}</p>
