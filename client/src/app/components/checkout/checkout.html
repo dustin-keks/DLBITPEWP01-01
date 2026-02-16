@@ -104,18 +104,18 @@
 
         <div class="form-floating mb-3">
             <select formControlName="expirationMonth" class="form-select" id="expiration-month">
-                <option value="01">Januar</option>
-                <option value="02">Februar</option>
-                <option value="03">März</option>
+                @for (month of creditCardMonths; track $index) {
+                    <option value="{{ month }}">{{ month }}</option>
+                }
             </select>
             <label for="expiration-month">Ablaufdatum Monat</label>
         </div>
 
         <div class="form-floating mb-3">
             <select formControlName="expirationYear" class="form-select" id="expiration-year">
-                <option value="2026">2026</option>
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
+                @for (year of creditCardYears; track $index) {
+                    <option value="{{ year }}">{{ year }}</option>
+                }
             </select>
             <label for="expiration-month">Ablaufdatum Jahr</label>
         </div>

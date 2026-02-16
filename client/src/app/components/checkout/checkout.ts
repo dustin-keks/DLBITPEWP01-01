@@ -51,7 +51,7 @@ export class Checkout implements OnInit {
       })
     });
 
-    // populate crefit card months
+    // populate credit card months
     const startMonth: number = new Date().getMonth() + 1; // months are 0-based
     console.log('startMonth: ' + startMonth);
 
