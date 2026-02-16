@@ -112,7 +112,7 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="expirationYear" class="form-select" id="expiration-year">
+            <select formControlName="expirationYear" class="form-select" id="expiration-year" (change)="handleMonthsAndYears()">
                 @for (year of creditCardYears; track $index) {
                     <option value="{{ year }}">{{ year }}</option>
                 }
