@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CheckoutFormService } from '../../services/checkout-form-service';
 
 @Component({
   selector: 'app-checkout',
@@ -14,7 +15,12 @@ export class Checkout implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {}
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
+  constructor(private formBuilder: FormBuilder,
+              private checkoutFormService: CheckoutFormService
+  ) {}
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -44,6 +50,25 @@ export class Checkout implements OnInit {
         expirationYear: ['']
       })
     });
+
+    // populate crefit card months
+    const startMonth: number = new Date().getMonth() + 1; // months are 0-based
+    console.log('startMonth: ' + startMonth);
+
+    this.checkoutFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log('Retrieved credit card months ' + JSON.stringify(data));
+        this.creditCardMonths = data;
+      }
+    );
+
+    // populate credit card years
+    this.checkoutFormService.getCreditCardYears().subscribe(
+      data => {
+        console.log('Retrieved credit card years ' + JSON.stringify(data));
+        this.creditCardYears = data;
+      }
+    )
   }
 
   onSubmit() {
