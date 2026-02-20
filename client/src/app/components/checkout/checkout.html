@@ -40,9 +40,9 @@
 
         <div class="form-floating mb-3">
             <select formControlName="country" class="form-select" id="billing-country">
-                <option value="DEU">Deutschland</option>
-                <option value="AUT">Östereich</option>
-                <option value="CHE">Schweiz</option>
+                @for (country of countries; track country.id) {
+                    <option value="{{ country.code }}">{{ country.name }}</option>
+                }
             </select>
             <label for="billing-country">Land</label>
         </div>
@@ -68,9 +68,9 @@
 
         <div class="form-floating mb-3">
             <select formControlName="country" class="form-select" id="shipping-country">
-                <option value="DEU">Deutschland</option>
-                <option value="AUT">Östereich</option>
-                <option value="CHE">Schweiz</option>
+                @for (country of countries; track country.id) {
+                    <option value="{{ country.code }}">{{ country.name }}</option>
+                }
             </select>
             <label for="shipping-country">Land</label>
         </div>

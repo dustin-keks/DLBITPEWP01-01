@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutFormService } from '../../services/checkout-form-service';
+import { Country } from '../../common/country';
 
 @Component({
   selector: 'app-checkout',
@@ -17,6 +18,8 @@ export class Checkout implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+
+  countries: Country[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private checkoutFormService: CheckoutFormService
@@ -67,6 +70,14 @@ export class Checkout implements OnInit {
       data => {
         console.log('Retrieved credit card years ' + JSON.stringify(data));
         this.creditCardYears = data;
+      }
+    )
+
+    // populate countries
+    this.checkoutFormService.getCountries().subscribe(
+      data => {
+        console.log('Retrieved countries: ' + JSON.stringify(data));
+        this.countries = data;
       }
     )
   }
