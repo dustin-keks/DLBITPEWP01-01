@@ -39,12 +39,21 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="billing-country">
+            <select formControlName="country" class="form-select" id="billing-country" (change)="getStates('billingAddress')">
                 @for (country of countries; track country.id) {
-                    <option value="{{ country.code }}">{{ country.name }}</option>
+                    <option [ngValue]="country">{{ country.name }}</option>
                 }
             </select>
             <label for="billing-country">Land</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="state" class="form-select" id="billing-state">
+                @for (state of billingAddressStates; track state.id) {
+                    <option value="{{ state.id }}">{{ state.name }}</option>
+                }
+            </select>
+            <label for="billing-state">Bundesland/Kantone</label>
         </div>
     </div>
 
@@ -67,12 +76,21 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="shipping-country">
+            <select formControlName="country" class="form-select" id="shipping-country" (change)="getStates('shippingAddress')">
                 @for (country of countries; track country.id) {
-                    <option value="{{ country.code }}">{{ country.name }}</option>
+                    <option [ngValue]="country">{{ country.name }}</option>
                 }
             </select>
             <label for="shipping-country">Land</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select formControlName="state" class="form-select" id="shipping-state">
+                @for (state of shippingAddressStates; track state.id) {
+                    <option value="{{ state.id }}">{{ state.name }}</option>
+                }
+            </select>
+            <label for="shipping-state">Bundesland/Kantone</label>
         </div>
     </div>
 
