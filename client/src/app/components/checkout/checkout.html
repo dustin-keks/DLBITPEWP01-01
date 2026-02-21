@@ -50,7 +50,7 @@
         <div class="form-floating mb-3">
             <select formControlName="state" class="form-select" id="billing-state">
                 @for (state of billingAddressStates; track state.id) {
-                    <option value="{{ state.id }}">{{ state.name }}</option>
+                    <option [ngValue]="state">{{ state.name }}</option>
                 }
             </select>
             <label for="billing-state">Bundesland/Kantone</label>
@@ -87,7 +87,7 @@
         <div class="form-floating mb-3">
             <select formControlName="state" class="form-select" id="shipping-state">
                 @for (state of shippingAddressStates; track state.id) {
-                    <option value="{{ state.id }}">{{ state.name }}</option>
+                    <option [ngValue]="state">{{ state.name }}</option>
                 }
             </select>
             <label for="shipping-state">Bundesland/Kantone</label>
