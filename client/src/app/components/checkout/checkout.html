@@ -5,18 +5,54 @@
         <h2 class="h5">Kundendaten</h2>
 
         <div class="form-floating mb-3">
-            <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="">
+            <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="" 
+                    [class.is-invalid]="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+                    [class.is-valid]="firstName?.valid && (firstName?.dirty || firstName?.touched)">
             <label for="first-name">Vorname</label>
+
+            <div class="invalid-feedback"> 
+                @if (firstName?.errors?.['required']) {
+                    Der Vorname ist ein Pflichtfeld.
+                }
+
+                @if (firstName?.errors?.['minlength']) {
+                    Der Vorname muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="lastName" type="text" class="form-control" id="last-name" placeholder="">
+            <input formControlName="lastName" type="text" class="form-control" id="last-name" placeholder=""
+                    [class.is-invalid]="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                    [class.is-valid]="lastName?.valid && (lastName?.dirty || lastName?.touched)">
             <label for="last-name">Nachname</label>
+
+            <div class="invalid-feedback"> 
+                @if (lastName?.errors?.['required']) {
+                    Der Nachname ist ein Pflichtfeld.
+                }
+
+                @if (lastName?.errors?.['minlength']) {
+                    Der Nachname muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="email" type="email" class="form-control" id="email" placeholder="">
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder=""
+                    [class.is-invalid]="email?.invalid && (email?.dirty || email?.touched)"
+                    [class.is-valid]="email?.valid && (email?.dirty || email?.touched)">
             <label for="email">E-Mail</label>
+
+            <div class="invalid-feedback"> 
+                @if (email?.errors?.['required']) {
+                    Die E-Mail-Adresse ist ein Pflichtfeld.
+                }
+
+                @if (email?.errors?.['email']) {
+                    Die E-Mail-Adresse besitzt ein ungültiges Format.
+                }
+            </div>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckoutFormService } from '../../services/checkout-form-service';
 import { Country } from '../../common/country';
 import { State } from '../../common/state';
@@ -32,9 +32,9 @@ export class Checkout implements OnInit {
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: ['']
+        firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        email: new FormControl('', [Validators.required, Validators.email])
       }),
       billingAddress: this.formBuilder.group({
         street: [''],
@@ -88,9 +88,24 @@ export class Checkout implements OnInit {
     )
   }
 
+  get firstName() {
+    return this.checkoutFormGroup.get('customer.firstName');
+  }
+  get lastName() {
+    return this.checkoutFormGroup.get('customer.lastName');
+  }
+  get email() {
+    return this.checkoutFormGroup.get('customer.email');
+  }
+
   onSubmit() {
     console.log('Handling the submit button');
     console.log(this.checkoutFormGroup.get('customer')?.value);
+
+    if (this.checkoutFormGroup.invalid) {
+      console.log('checking...');
+      this.checkoutFormGroup.markAllAsTouched();
+    }
   }
 
   handleMonthsAndYears() {
