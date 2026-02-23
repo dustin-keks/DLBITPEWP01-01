@@ -11,7 +11,7 @@
             <label for="first-name">Vorname</label>
 
             <div class="invalid-feedback"> 
-                @if (firstName?.errors?.['required']) {
+                @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
                     Der Vorname ist ein Pflichtfeld.
                 }
 
@@ -28,7 +28,7 @@
             <label for="last-name">Nachname</label>
 
             <div class="invalid-feedback"> 
-                @if (lastName?.errors?.['required']) {
+                @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
                     Der Nachname ist ein Pflichtfeld.
                 }
 
