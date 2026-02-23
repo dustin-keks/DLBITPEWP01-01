@@ -38,11 +38,11 @@ export class Checkout implements OnInit {
         email: new FormControl('', [Validators.required, Validators.email])
       }),
       billingAddress: this.formBuilder.group({
-        street: [''],
-        zipCode: [''],
-        city: [''],
-        country: [''],
-        state: ['']
+        street: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
+        zipCode: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(5), CheckoutValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
+        country: new FormControl('', [Validators.required]),
+        state: new FormControl('', [Validators.required])
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -89,6 +89,8 @@ export class Checkout implements OnInit {
     )
   }
 
+  // getter methods to access form controls
+  // - customer
   get firstName() {
     return this.checkoutFormGroup.get('customer.firstName');
   }
@@ -97,6 +99,23 @@ export class Checkout implements OnInit {
   }
   get email() {
     return this.checkoutFormGroup.get('customer.email');
+  }
+
+  // - billingAddress
+  get billingAddressStreet() {
+    return this.checkoutFormGroup.get('billingAddress.street');
+  }
+  get billingAddressZipCode() {
+    return this.checkoutFormGroup.get('billingAddress.zipCode');
+  }
+  get billingAddressCity() {
+    return this.checkoutFormGroup.get('billingAddress.city');
+  }
+  get billingAddressCountry() {
+    return this.checkoutFormGroup.get('billingAddress.country');
+  }
+  get billingAddressState() {
+    return this.checkoutFormGroup.get('billingAddress.state');
   }
 
   onSubmit() {

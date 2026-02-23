@@ -60,36 +60,92 @@
         <h2 class="h5">Rechnungsadresse</h2>
 
         <div class="form-floating mb-3">
-            <input formControlName="street" type="text" class="form-control" id="billing-street" placeholder="">
+            <input formControlName="street" type="text" class="form-control" id="billing-street" placeholder=""
+                    [class.is-invalid]="billingAddressStreet?.invalid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)"
+                    [class.is-valid]="billingAddressStreet?.valid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)">
             <label for="billing-street">Straße und Hausnummer</label>
+
+            <div class="invalid-feedback"> 
+                @if (billingAddressStreet?.errors?.['required'] || billingAddressStreet?.errors?.['notOnlyWhitespace']) {
+                    Die Straße ist ein Pflichtfeld.
+                }
+
+                @if (billingAddressStreet?.errors?.['minlength']) {
+                    Die Straße muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="zipCode" type="text" class="form-control" id="billing-plz" placeholder="">
+            <input formControlName="zipCode" type="text" class="form-control" id="billing-plz" placeholder=""
+                    [class.is-invalid]="billingAddressZipCode?.invalid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)"
+                    [class.is-valid]="billingAddressZipCode?.valid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)">
             <label for="billing-plz">Postleitzahl</label>
+
+            <div class="invalid-feedback"> 
+                @if (billingAddressZipCode?.errors?.['required'] || billingAddressZipCode?.errors?.['notOnlyWhitespace']) {
+                    Die PLZ ist ein Pflichtfeld.
+                }
+
+                @if (billingAddressZipCode?.errors?.['minlength']) {
+                    Die PLZ muss mindestens 4 Zeichen lang sein.
+                }
+
+                @if (billingAddressZipCode?.errors?.['maxlength']) {
+                    Die PLZ darf höchstens 5 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="city" type="text" class="form-control" id="billing-city" placeholder="">
+            <input formControlName="city" type="text" class="form-control" id="billing-city" placeholder=""
+                    [class.is-invalid]="billingAddressCity?.invalid && (billingAddressCity?.dirty || billingAddressCity?.touched)"
+                    [class.is-valid]="billingAddressCity?.valid && (billingAddressCity?.dirty || billingAddressCity?.touched)">
             <label for="billing-city">Stadt</label>
+
+            <div class="invalid-feedback"> 
+                @if (billingAddressCity?.errors?.['required'] || billingAddressCity?.errors?.['notOnlyWhitespace']) {
+                    Die Stadt ist ein Pflichtfeld.
+                }
+
+                @if (billingAddressCity?.errors?.['minlength']) {
+                    Die Stadt muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="billing-country" (change)="getStates('billingAddress')">
+            <select formControlName="country" class="form-select" id="billing-country" (change)="getStates('billingAddress')"
+                    [class.is-invalid]="billingAddressCountry?.invalid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)"
+                    [class.is-valid]="billingAddressCountry?.valid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)">
                 @for (country of countries; track country.id) {
                     <option [ngValue]="country">{{ country.name }}</option>
                 }
             </select>
             <label for="billing-country">Land</label>
+
+            <div class="invalid-feedback"> 
+                @if (billingAddressCountry?.errors?.['required']) {
+                    Das Land ist ein Pflichtfeld.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="state" class="form-select" id="billing-state">
+            <select formControlName="state" class="form-select" id="billing-state"
+                    [class.is-invalid]="billingAddressState?.invalid && (billingAddressState?.dirty || billingAddressState?.touched)"
+                    [class.is-valid]="billingAddressState?.valid && (billingAddressState?.dirty || billingAddressState?.touched)">
                 @for (state of billingAddressStates; track state.id) {
                     <option [ngValue]="state">{{ state.name }}</option>
                 }
             </select>
-            <label for="billing-state">Bundesland/Kantone</label>
+            <label for="billing-state">Bundesland/Kanton</label>
+
+            <div class="invalid-feedback"> 
+                @if (billingAddressState?.errors?.['required']) {
+                    Bundesland/Kanton ist ein Pflichtfeld.
+                }
+            </div>
         </div>
     </div>
 
@@ -126,7 +182,7 @@
                     <option [ngValue]="state">{{ state.name }}</option>
                 }
             </select>
-            <label for="shipping-state">Bundesland/Kantone</label>
+            <label for="shipping-state">Bundesland/Kanton</label>
         </div>
     </div>
 
