@@ -250,26 +250,70 @@
         <h2 class="h5">Kreditkarte</h2>
 
         <div class="form-floating mb-3">
-            <select formControlName="cardType" class="form-select" id="card-type">
+            <select formControlName="cardType" class="form-select" id="card-type"
+                    [class.is-invalid]="creditCardCardType?.invalid && (creditCardCardType?.dirty || creditCardCardType?.touched)"
+                    [class.is-valid]="creditCardCardType?.valid && (creditCardCardType?.dirty || creditCardCardType?.touched)">
                 <option value="Visa">Visa</option>
                 <option value="Master">Master</option>
             </select>
             <label for="card-type">Kartentyp</label>
+
+            <div class="invalid-feedback"> 
+                @if (creditCardCardType?.errors?.['required']) {
+                    Der Kartentyp ist ein Pflichtfeld.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="nameOnCard" type="text" class="form-control" id="cc-name" placeholder="">
+            <input formControlName="nameOnCard" type="text" class="form-control" id="cc-name" placeholder=""
+                    [class.is-invalid]="creditCardNameOnCard?.invalid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)"
+                    [class.is-valid]="creditCardNameOnCard?.valid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)">
             <label for="cc-name">Kartenname</label>
+
+            <div class="invalid-feedback"> 
+                @if (creditCardNameOnCard?.errors?.['required'] || creditCardNameOnCard?.errors?.['notOnlyWhitespace']) {
+                    Der Kartenname ist ein Pflichtfeld.
+                }
+
+                @if (creditCardNameOnCard?.errors?.['minlength']) {
+                    Der Kartenname muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="cardNumber" type="text" class="form-control" id="cc-number" placeholder="">
+            <input formControlName="cardNumber" type="text" class="form-control" id="cc-number" placeholder=""
+                    [class.is-invalid]="creditCardCardNumber?.invalid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)"
+                    [class.is-valid]="creditCardCardNumber?.valid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)">
             <label for="cc-number">Kartennummer</label>
+
+            <div class="invalid-feedback"> 
+                @if (creditCardCardNumber?.errors?.['required'] || creditCardCardNumber?.errors?.['notOnlyWhitespace']) {
+                    Die Kartennummer ist ein Pflichtfeld.
+                }
+
+                @if (creditCardCardNumber?.errors?.['pattern']) {
+                    Die Kartennummer muss 16 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="securityCode" type="text" class="form-control" id="security-code" placeholder="">
+            <input formControlName="securityCode" type="text" class="form-control" id="security-code" placeholder=""
+                    [class.is-invalid]="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)"
+                    [class.is-valid]="creditCardSecurityCode?.valid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)">
             <label for="security-code">Sicherheitscode (3-stellig)</label>
+
+            <div class="invalid-feedback"> 
+                @if (creditCardSecurityCode?.errors?.['required'] || creditCardSecurityCode?.errors?.['notOnlyWhitespace']) {
+                    Der Sicherheitscode ist ein Pflichtfeld.
+                }
+
+                @if (creditCardSecurityCode?.errors?.['pattern']) {
+                    Der Sicherheitscode muss 3 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
