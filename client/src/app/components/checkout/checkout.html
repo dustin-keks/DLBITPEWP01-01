@@ -1,6 +1,7 @@
 <h1 class="border-bottom pb-3 mb-3">Kasse</h1>
 
 <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+    <!-- customer -->
     <div formGroupName="customer">
         <h2 class="h5">Kundendaten</h2>
 
@@ -56,6 +57,7 @@
         </div>
     </div>
 
+    <!-- billingAddress -->
     <div formGroupName="billingAddress">
         <h2 class="h5">Rechnungsadresse</h2>
 
@@ -149,43 +151,101 @@
         </div>
     </div>
 
+    <!-- shippingAddress -->
     <div formGroupName="shippingAddress">
         <h2 class="h5">Lieferadresse</h2>
 
         <div class="form-floating mb-3">
-            <input formControlName="street" type="text" class="form-control" id="shipping-street" placeholder="">
+            <input formControlName="street" type="text" class="form-control" id="shipping-street" placeholder=""
+                    [class.is-invalid]="shippingAddressStreet?.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)"
+                    [class.is-valid]="shippingAddressStreet?.valid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)">
             <label for="shipping-street">Straße und Hausnummer</label>
+
+            <div class="invalid-feedback"> 
+                @if (shippingAddressStreet?.errors?.['required'] || shippingAddressStreet?.errors?.['notOnlyWhitespace']) {
+                    Die Straße ist ein Pflichtfeld.
+                }
+
+                @if (shippingAddressStreet?.errors?.['minlength']) {
+                    Die Straße muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="zipCode" type="text" class="form-control" id="shipping-plz" placeholder="">
+            <input formControlName="zipCode" type="text" class="form-control" id="shipping-plz" placeholder=""
+                    [class.is-invalid]="shippingAddressZipCode?.invalid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)"
+                    [class.is-valid]="shippingAddressZipCode?.valid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)">
             <label for="shipping-plz">Postleitzahl</label>
+
+            <div class="invalid-feedback"> 
+                @if (shippingAddressZipCode?.errors?.['required'] || shippingAddressZipCode?.errors?.['notOnlyWhitespace']) {
+                    Die PLZ ist ein Pflichtfeld.
+                }
+
+                @if (shippingAddressZipCode?.errors?.['minlength']) {
+                    Die PLZ muss mindestens 4 Zeichen lang sein.
+                }
+
+                @if (shippingAddressZipCode?.errors?.['maxlength']) {
+                    Die PLZ darf höchstens 5 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <input formControlName="city" type="text" class="form-control" id="shipping-city" placeholder="">
+            <input formControlName="city" type="text" class="form-control" id="shipping-city" placeholder=""
+                    [class.is-invalid]="shippingAddressCity?.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)"
+                    [class.is-valid]="shippingAddressCity?.valid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)">
             <label for="shipping-city">Stadt</label>
+
+            <div class="invalid-feedback"> 
+                @if (shippingAddressCity?.errors?.['required'] || shippingAddressCity?.errors?.['notOnlyWhitespace']) {
+                    Die Stadt ist ein Pflichtfeld.
+                }
+
+                @if (shippingAddressCity?.errors?.['minlength']) {
+                    Die Stadt muss mindestens 2 Zeichen lang sein.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="shipping-country" (change)="getStates('shippingAddress')">
+            <select formControlName="country" class="form-select" id="shipping-country" (change)="getStates('shippingAddress')"
+                    [class.is-invalid]="shippingAddressCountry?.invalid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)"
+                    [class.is-valid]="shippingAddressCountry?.valid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)">
                 @for (country of countries; track country.id) {
                     <option [ngValue]="country">{{ country.name }}</option>
                 }
             </select>
             <label for="shipping-country">Land</label>
+
+            <div class="invalid-feedback"> 
+                @if (shippingAddressCountry?.errors?.['required']) {
+                    Das Land ist ein Pflichtfeld.
+                }
+            </div>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="state" class="form-select" id="shipping-state">
+            <select formControlName="state" class="form-select" id="shipping-state"
+                    [class.is-invalid]="shippingAddressState?.invalid && (shippingAddressState?.dirty || shippingAddressState?.touched)"
+                    [class.is-valid]="shippingAddressState?.valid && (shippingAddressState?.dirty || shippingAddressState?.touched)">
                 @for (state of shippingAddressStates; track state.id) {
                     <option [ngValue]="state">{{ state.name }}</option>
                 }
             </select>
             <label for="shipping-state">Bundesland/Kanton</label>
+
+            <div class="invalid-feedback"> 
+                @if (shippingAddressState?.errors?.['required']) {
+                    Bundesland/Kanton ist ein Pflichtfeld.
+                }
+            </div>
         </div>
     </div>
 
+    <!-- creditCard -->
     <div formGroupName="creditCard">
         <h2 class="h5">Kreditkarte</h2>
 

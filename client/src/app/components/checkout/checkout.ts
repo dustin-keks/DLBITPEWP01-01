@@ -45,11 +45,11 @@ export class Checkout implements OnInit {
         state: new FormControl('', [Validators.required])
       }),
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        zipCode: [''],
-        city: [''],
-        country: [''],
-        state: ['']
+        street: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
+        zipCode: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(5), CheckoutValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
+        country: new FormControl('', [Validators.required]),
+        state: new FormControl('', [Validators.required])
       }),
       creditCard: this.formBuilder.group({
         cardType: [''],
@@ -116,6 +116,23 @@ export class Checkout implements OnInit {
   }
   get billingAddressState() {
     return this.checkoutFormGroup.get('billingAddress.state');
+  }
+
+  // - shippingAddress
+  get shippingAddressStreet() {
+    return this.checkoutFormGroup.get('shippingAddress.street');
+  }
+  get shippingAddressZipCode() {
+    return this.checkoutFormGroup.get('shippingAddress.zipCode');
+  }
+  get shippingAddressCity() {
+    return this.checkoutFormGroup.get('shippingAddress.city');
+  }
+  get shippingAddressCountry() {
+    return this.checkoutFormGroup.get('shippingAddress.country');
+  }
+  get shippingAddressState() {
+    return this.checkoutFormGroup.get('shippingAddress.state');
   }
 
   onSubmit() {
