@@ -85,16 +85,12 @@
             <label for="billing-plz">Postleitzahl</label>
 
             <div class="invalid-feedback"> 
-                @if (billingAddressZipCode?.errors?.['required'] || billingAddressZipCode?.errors?.['notOnlyWhitespace']) {
+                @if (billingAddressZipCode?.errors?.['required']) {
                     Die PLZ ist ein Pflichtfeld.
                 }
 
-                @if (billingAddressZipCode?.errors?.['minlength']) {
-                    Die PLZ muss mindestens 4 Zeichen lang sein.
-                }
-
-                @if (billingAddressZipCode?.errors?.['maxlength']) {
-                    Die PLZ darf höchstens 5 Zeichen lang sein.
+                @if (billingAddressZipCode?.errors?.['pattern']) {
+                    Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
                 }
             </div>
         </div>
@@ -179,16 +175,12 @@
             <label for="shipping-plz">Postleitzahl</label>
 
             <div class="invalid-feedback"> 
-                @if (shippingAddressZipCode?.errors?.['required'] || shippingAddressZipCode?.errors?.['notOnlyWhitespace']) {
+                @if (shippingAddressZipCode?.errors?.['required']) {
                     Die PLZ ist ein Pflichtfeld.
                 }
 
-                @if (shippingAddressZipCode?.errors?.['minlength']) {
-                    Die PLZ muss mindestens 4 Zeichen lang sein.
-                }
-
-                @if (shippingAddressZipCode?.errors?.['maxlength']) {
-                    Die PLZ darf höchstens 5 Zeichen lang sein.
+                @if (shippingAddressZipCode?.errors?.['pattern']) {
+                    Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
                 }
             </div>
         </div>
@@ -289,12 +281,12 @@
             <label for="cc-number">Kartennummer</label>
 
             <div class="invalid-feedback"> 
-                @if (creditCardCardNumber?.errors?.['required'] || creditCardCardNumber?.errors?.['notOnlyWhitespace']) {
+                @if (creditCardCardNumber?.errors?.['required']) {
                     Die Kartennummer ist ein Pflichtfeld.
                 }
 
                 @if (creditCardCardNumber?.errors?.['pattern']) {
-                    Die Kartennummer muss 16 Zeichen lang sein.
+                    Die Kartennummer muss 16 Zeichen lang sein und darf nur aus Zahlen bestehen.
                 }
             </div>
         </div>
@@ -306,29 +298,29 @@
             <label for="security-code">Sicherheitscode (3-stellig)</label>
 
             <div class="invalid-feedback"> 
-                @if (creditCardSecurityCode?.errors?.['required'] || creditCardSecurityCode?.errors?.['notOnlyWhitespace']) {
+                @if (creditCardSecurityCode?.errors?.['required']) {
                     Der Sicherheitscode ist ein Pflichtfeld.
                 }
 
                 @if (creditCardSecurityCode?.errors?.['pattern']) {
-                    Der Sicherheitscode muss 3 Zeichen lang sein.
+                    Der Sicherheitscode muss 3 Zeichen lang sein und darf nur aus Zahlen bestehen.
                 }
             </div>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="expirationMonth" class="form-select" id="expiration-month">
+            <select formControlName="expirationMonth" class="form-select is-valid" id="expiration-month">
                 @for (month of creditCardMonths; track $index) {
-                    <option value="{{ month }}">{{ month }}</option>
+                    <option [value]="month">{{ month }}</option>
                 }
             </select>
             <label for="expiration-month">Ablaufdatum Monat</label>
         </div>
 
         <div class="form-floating mb-3">
-            <select formControlName="expirationYear" class="form-select" id="expiration-year" (change)="handleMonthsAndYears()">
+            <select formControlName="expirationYear" class="form-select is-valid" id="expiration-year" (change)="handleMonthsAndYears()">
                 @for (year of creditCardYears; track $index) {
-                    <option value="{{ year }}">{{ year }}</option>
+                    <option [value]="year">{{ year }}</option>
                 }
             </select>
             <label for="expiration-month">Ablaufdatum Jahr</label>

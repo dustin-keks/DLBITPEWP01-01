@@ -39,14 +39,14 @@ export class Checkout implements OnInit {
       }),
       billingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
-        zipCode: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(5), CheckoutValidators.notOnlyWhitespace]),
+        zipCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4,5}')]),
         city: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
         country: new FormControl('', [Validators.required]),
         state: new FormControl('', [Validators.required])
       }),
       shippingAddress: this.formBuilder.group({
         street: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
-        zipCode: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(5), CheckoutValidators.notOnlyWhitespace]),
+        zipCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4,5}')]),
         city: new FormControl('', [Validators.required, Validators.minLength(2), CheckoutValidators.notOnlyWhitespace]),
         country: new FormControl('', [Validators.required]),
         state: new FormControl('', [Validators.required])
@@ -69,6 +69,7 @@ export class Checkout implements OnInit {
       data => {
         console.log('Retrieved credit card months ' + JSON.stringify(data));
         this.creditCardMonths = data;
+        this.checkoutFormGroup.get('creditCard')!.get('expirationMonth')!.setValue(data[0]);
       }
     );
 
@@ -77,6 +78,7 @@ export class Checkout implements OnInit {
       data => {
         console.log('Retrieved credit card years ' + JSON.stringify(data));
         this.creditCardYears = data;
+        this.checkoutFormGroup.get('creditCard')!.get('expirationYear')!.setValue(data[0]);
       }
     )
 
