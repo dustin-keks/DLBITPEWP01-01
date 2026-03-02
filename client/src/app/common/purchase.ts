@@ -1,2 +1,12 @@
+import { Address } from "./address";
+import { Customer } from "./customer";
+import { Order } from "./order";
+import { OrderItem } from "./order-item";
+
 export class Purchase {
+    customer: Customer = new Customer();
+    billingAddress: Address = new Address();
+    shippingAddress: Address = new Address();
+    order: Order = new Order();
+    orderItems: OrderItem[] = [];
 }
