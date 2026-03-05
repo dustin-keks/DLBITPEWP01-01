@@ -33,6 +33,12 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
