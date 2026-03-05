@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "allowed.origins",
-  "type": "java.lang.String",
-  "description": "allowed.origins for CORS mapping for Spring Data REST"
-}]}
+{"properties": [
+  {
+    "name": "allowed.origins",
+    "type": "java.lang.String",
+    "description": "allowed.origins for CORS mapping for Spring Data REST"
+  },
+  {
+    "name": "allowed.methods",
+    "type": "java.lang.String",
+    "description": "allowed.methods for CORS mapping for Spring Data REST"
+  }
+]}

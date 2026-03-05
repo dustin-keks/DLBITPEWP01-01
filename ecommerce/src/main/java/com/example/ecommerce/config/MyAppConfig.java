@@ -10,12 +10,19 @@ public class MyAppConfig implements WebMvcConfigurer {
     @Value("${allowed.origins}")
     private String[] theAllowedOrigins;
 
+    @Value("${allowed.methods}")
+    private String[] theAllowedMethods;
+
     @Value("${spring.data.rest.base-path}")
     private String basePath;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // set up cors mapping
-        registry.addMapping(basePath + "/**").allowedOrigins(theAllowedOrigins);
+        registry.addMapping(basePath + "/**")
+                .allowedOrigins(theAllowedOrigins)
+                .allowedMethods(theAllowedMethods)
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }
