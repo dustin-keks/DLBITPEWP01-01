@@ -3,10 +3,11 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { ProductCategoryMenu } from './components/product-category-menu/product-category-menu';
 import { Search } from './components/search/search';
 import { CartStatus } from './components/cart-status/cart-status';
+import { LoginStatus } from './components/login-status/login-status';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, ProductCategoryMenu, Search, CartStatus],
+  imports: [RouterOutlet, RouterLink, ProductCategoryMenu, Search, CartStatus, LoginStatus],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
