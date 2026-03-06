@@ -4,8 +4,10 @@ import { ProductDetails } from './components/product-details/product-details';
 import { CartDetails } from './components/cart-details/cart-details';
 import { Checkout } from './components/checkout/checkout';
 import { Login } from './components/login/login';
+import { Register } from './components/register/register';
 
 export const routes: Routes = [
+    {path: 'register', component: Register},
     {path: 'login', component: Login},
     {path: 'checkout', component: Checkout},
     {path: 'cart-details', component: CartDetails},
