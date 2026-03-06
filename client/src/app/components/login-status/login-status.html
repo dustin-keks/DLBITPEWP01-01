@@ -1,1 +1,7 @@
-<p>login-status works!</p>
+<a routerLink="/login" class="btn btn-warning" role="button">
+    @if (isLoggedIn | async) {
+        <i class="bi bi-person-check"></i>
+    } @else {
+        <i class="bi bi-person"></i>
+    }
+</a>
