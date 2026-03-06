@@ -1,1 +1,49 @@
-<p>login works!</p>
+@if (isLoggedIn | async) {
+    <h1>Kundenkonto</h1>
+
+    @if (successMessage) {
+        <div class="alert alert-success" role="alert">
+            {{ successMessage }}
+        </div>
+    }
+
+    <p>Eingeloggt als <strong>{{ userEmail | async}}</strong>.</p>
+
+    <div class="d-grid">
+        <button class="btn btn-warning btn-lg" (click)="logout()">
+            Ausloggen
+        </button>
+    </div>
+} @else {
+    <h1>Login</h1>
+
+    @if (errorMessage) {
+        <div class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+    }
+
+    @if (successMessage) {
+        <div class="alert alert-success" role="alert">
+            {{ successMessage }}
+        </div>
+    }
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" [(ngModel)]="email" name="login" id="login-email" placeholder="">
+            <label for="login-email">E-Mail-Adresse</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" [(ngModel)]="password" name="password" id="login-password" placeholder="">
+            <label for="login-password">Passwort</label>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg" role="button">
+                Einloggen
+            </button>
+        </div>
+    </form>
+}
