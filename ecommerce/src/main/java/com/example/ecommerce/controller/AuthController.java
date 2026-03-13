@@ -64,6 +64,11 @@ public class AuthController {
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
             response.put("loggedIn", true);
             response.put("email", auth.getName());
+
+            Customer customer = customerRepository.findByEmail(auth.getName());
+            if (customer != null) {
+                response.put("role", customer.getRole());
+            }
         } else {
             response.put("loggedIn", false);
         }
