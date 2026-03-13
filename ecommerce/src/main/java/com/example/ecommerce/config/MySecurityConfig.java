@@ -25,6 +25,9 @@ public class MySecurityConfig {
             .csrf(csrf -> csrf.disable())
 
             .authorizeHttpRequests(auth -> auth
+                // admin: only accessible with ROLE_ADMIN
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                 // public: products, categories, ...
                 .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
 
