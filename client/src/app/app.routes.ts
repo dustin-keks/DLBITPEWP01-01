@@ -5,8 +5,14 @@ import { CartDetails } from './components/cart-details/cart-details';
 import { Checkout } from './components/checkout/checkout';
 import { Login } from './components/login/login';
 import { Register } from './components/register/register';
+import { AdminCategoryList } from './components/admin-category-list/admin-category-list';
+import { adminGuard } from './guards/admin-guard';
+import { AdminCategoryForm } from './components/admin-category-form/admin-category-form';
 
 export const routes: Routes = [
+    {path: 'admin/categories/edit/:id', component: AdminCategoryForm, canActivate: [adminGuard]},
+    {path: 'admin/categories/new', component: AdminCategoryForm, canActivate: [adminGuard]},
+    {path: 'admin/categories', component: AdminCategoryList, canActivate: [adminGuard]},
     {path: 'register', component: Register},
     {path: 'login', component: Login},
     {path: 'checkout', component: Checkout},
