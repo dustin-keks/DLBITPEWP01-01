@@ -1,1 +1,27 @@
-<p>admin-category-form works!</p>
+<h1>{{ isEditMode ? 'Kategorie bearbeiten' : 'Neue Kategorie erstellen' }}</h1>
+
+<form (ngSubmit)="onSubmit()">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="category-name" name="categoryName" placeholder="" required minlength="2" 
+            [(ngModel)]="category.categoryName"
+            #catName="ngModel"
+            [class.is-invalid]="catName.invalid && (catName.touched || catName.dirty)"
+            [class.is-valid]="catName.valid && (catName.touched || catName.dirty)"
+        >
+        <label for="category-name">Kategoriename</label>
+
+        @if (catName.invalid && (catName.touched || catName.dirty)) {
+            <div class="invalid-feedback">
+                Bitte einen Kategorienamen eingeben (mindestens 2 Zeichen)
+            </div>
+        }
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg" [disabled]="catName.invalid">
+            {{ isEditMode ? 'Kategorie speichern' : 'Neue Kategorie erstellen' }}
+        </button>
+    </div>
+</form>
+
+<a routerLink="/admin/categories" class="btn btn-danger btn-sm mt-3">Abbrechen</a>
