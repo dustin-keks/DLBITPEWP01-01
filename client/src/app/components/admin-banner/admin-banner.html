@@ -1,1 +1,10 @@
-<p>admin-banner works!</p>
+@if ((userRole | async) === 'ROLE_ADMIN') {
+    <div class="container">
+        <div class="alert alert-info mt-3" role="alert">
+            Du bist als Admin eingeloggt!
+            <a routerLink="/admin/categories" class="btn btn-light">
+                <i class="bi bi-gear"></i> Kategorien verwalten
+            </a>
+        </div>
+    </div>
+}
