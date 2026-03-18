@@ -1,1 +1,40 @@
-<p>admin-category-list works!</p>
+<h1>Kategorien verwalten</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Kategoriename</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @for (category of categories; track category.id) {
+                <tr>
+                    <td>
+                        {{ category.id }}
+                    </td>
+                    <td>
+                        {{ category.categoryName }}
+                    </td>
+                    <td>
+                        <a [routerLink]="['/admin/categories/edit', category.id]" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil"></i> Bearbeiten
+                        </a>
+
+                        <button (click)="deleteCategory(category.id)" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Löschen
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-grid">
+    <a routerLink="/admin/categories/new" class="btn btn-success btn-lg">
+        <i class="bi bi-plus-lg"></i> Neue Kategorie erstellen
+    </a>
+</div>
