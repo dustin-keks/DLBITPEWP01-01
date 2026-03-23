@@ -14,6 +14,7 @@ import { CartItem } from '../../common/cart-item';
 })
 export class ProductDetails implements OnInit{
   product!: Product;
+  errorMessage: string = '';
 
   constructor(private productService: ProductService,
               private cartService: CartService,
@@ -31,11 +32,14 @@ export class ProductDetails implements OnInit{
     // convert string to number using the "+" symbol
     const theProductId: number = +this.route.snapshot.paramMap.get('id')!;
 
-    this.productService.getProduct(theProductId).subscribe(
-      data => {
+    this.productService.getProduct(theProductId).subscribe({
+      next: data => {
         this.product = data;
+      },
+      error: () => {
+        this.errorMessage = 'Das Produkt wurde nicht gefunden.';
       }
-    )
+    });
   }
 
   addToCart() {
