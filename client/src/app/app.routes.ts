@@ -8,8 +8,13 @@ import { Register } from './components/register/register';
 import { AdminCategoryList } from './components/admin-category-list/admin-category-list';
 import { adminGuard } from './guards/admin-guard';
 import { AdminCategoryForm } from './components/admin-category-form/admin-category-form';
+import { AdminProductForm } from './components/admin-product-form/admin-product-form';
+import { AdminProductList } from './components/admin-product-list/admin-product-list';
 
 export const routes: Routes = [
+    {path: 'admin/products/edit/:id', component: AdminProductForm, canActivate: [adminGuard]},
+    {path: 'admin/products/new', component: AdminProductForm, canActivate: [adminGuard]},
+    {path: 'admin/products', component: AdminProductList, canActivate: [adminGuard]},
     {path: 'admin/categories/edit/:id', component: AdminCategoryForm, canActivate: [adminGuard]},
     {path: 'admin/categories/new', component: AdminCategoryForm, canActivate: [adminGuard]},
     {path: 'admin/categories', component: AdminCategoryList, canActivate: [adminGuard]},
