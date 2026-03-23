@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductCategory } from '../common/product-category';
+import { Product } from '../common/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
   private categoryUrl = 'http://localhost:8080/api/admin/categories';
+  private productUrl = 'http://localhost:8080/api/admin/products';
 
   constructor(private http: HttpClient) {}
 
@@ -33,4 +35,36 @@ export class AdminService {
   }
 
   // products
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.productUrl);
+  }
+
+  getProduct(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.productUrl}/${id}`);
+  }
+
+  createProduct(product: ProductRequest): Observable<Product> {
+    return this.http.post<Product>(this.productUrl, product);
+  }
+
+  updateProduct(id: number, product: ProductRequest): Observable<Product> {
+    return this.http.put<Product>(`${this.productUrl}/${id}`, product);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.productUrl}/${id}`)
+  }
+}
+
+// DTO interface for creating/updating products
+interface ProductRequest {
+  sku: string;
+  name: string;
+  description: string;
+  unitPrice: number;
+  imageUrl: string;
+  active: boolean;
+  unitsInStock: number
+
+  categoryId: number;
 }
