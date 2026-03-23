@@ -1,1 +1,153 @@
-<p>admin-product-form works!</p>
+<h1>{{ isEditMode ? 'Produkt bearbeiten' : 'Neues Produkt erstellen' }}</h1>
+
+<div class="row">
+    @if (product.imageUrl) {
+        <div class="col-12 col-sm-auto">
+            <figure class="figure">
+                <img [src]="product.imageUrl" alt="Produktbild" class="img-thumbnail">
+                <figcaption class="figure-caption">Bildvorschau</figcaption>
+            </figure>
+        </div>
+    }
+    
+    <div class="col">
+        <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+            <!-- sku -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product-sku" name="productSku" placeholder="" required minlength="2" 
+                    [(ngModel)]="product.sku"
+                    #prodSku="ngModel"
+                    [class.is-invalid]="prodSku.invalid && (prodSku.touched || prodSku.dirty)"
+                    [class.is-valid]="prodSku.valid && (prodSku.touched || prodSku.dirty)"
+                >
+                <label for="product-sku">SKU</label>
+
+                @if (prodSku.invalid && (prodSku.touched || prodSku.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte eine SKU eingeben (mindestens 2 Zeichen)
+                    </div>
+                }
+            </div>
+
+            <!-- name -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product-name" name="productName" placeholder="" required minlength="2" 
+                    [(ngModel)]="product.name"
+                    #prodName="ngModel"
+                    [class.is-invalid]="prodName.invalid && (prodName.touched || prodName.dirty)"
+                    [class.is-valid]="prodName.valid && (prodName.touched || prodName.dirty)"
+                >
+                <label for="product-name">Produktname</label>
+
+                @if (prodName.invalid && (prodName.touched || prodName.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte einen Produktnamen eingeben (mindestens 2 Zeichen)
+                    </div>
+                }
+            </div>
+
+            <!-- description -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product-description" name="productDescription" placeholder="" required minlength="2" 
+                    [(ngModel)]="product.description"
+                    #prodDescription="ngModel"
+                    [class.is-invalid]="prodDescription.invalid && (prodDescription.touched || prodDescription.dirty)"
+                    [class.is-valid]="prodDescription.valid && (prodDescription.touched || prodDescription.dirty)"
+                >
+                <label for="product-description">Produktbeschreibung</label>
+
+                @if (prodDescription.invalid && (prodDescription.touched || prodDescription.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte eine Produktbeschreibung eingeben (mindestens 2 Zeichen)
+                    </div>
+                }
+            </div>
+
+            <!-- imageUrl -->
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product-image-url" name="productImageUrl" placeholder="" required minlength="2" 
+                    [(ngModel)]="product.imageUrl"
+                    #prodImageUrl="ngModel"
+                    [class.is-invalid]="prodImageUrl.invalid && (prodImageUrl.touched || prodImageUrl.dirty)"
+                    [class.is-valid]="prodImageUrl.valid && (prodImageUrl.touched || prodImageUrl.dirty)"
+                >
+                <label for="product-image-url">Bild-URL</label>
+
+                @if (prodImageUrl.invalid && (prodImageUrl.touched || prodImageUrl.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte eine Bild-URL eingeben (mindestens 2 Zeichen)
+                    </div>
+                }
+            </div>
+
+            <!-- active -->
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="product-active" name="productActive" [(ngModel)]="product.active">
+                <label class="form-check-label" for="productActive">Aktives Produkt</label>
+            </div>
+
+            <!-- unitPrice -->
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="product-unit-price" name="productUnitPrice" placeholder="" required min="0" step="0.01"
+                    [(ngModel)]="product.unitPrice"
+                    #unitPrice="ngModel"
+                    [class.is-invalid]="unitPrice.invalid && (unitPrice.touched || unitPrice.dirty)"
+                    [class.is-valid]="unitPrice.valid && (unitPrice.touched || unitPrice.dirty)"
+                >
+                <label for="product-unit-price">Preis in Euro</label>
+
+                @if (unitPrice.invalid && (unitPrice.touched || unitPrice.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte einen gültigen Preis eingeben
+                    </div>
+                }
+            </div>
+
+            <!-- unitsInStock -->
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="product-units-in-stock" name="productUnitsInStock" placeholder="" required min="0"
+                    [(ngModel)]="product.unitsInStock"
+                    #unitsInStock="ngModel"
+                    [class.is-invalid]="unitsInStock.invalid && (unitsInStock.touched || unitsInStock.dirty)"
+                    [class.is-valid]="unitsInStock.valid && (unitsInStock.touched || unitsInStock.dirty)"
+                >
+                <label for="product-units-in-stock">Lagerbestand</label>
+
+                @if (unitsInStock.invalid && (unitsInStock.touched || unitsInStock.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte einen gültigen Lagerbestand eingeben
+                    </div>
+                }
+            </div>
+
+            <!-- categoryId-->
+            <div class="form-floating mb-3">
+                <select class="form-select" id="category-id" name="categoryId" required
+                    [(ngModel)]="product.categoryId"
+                    #categoryId="ngModel"
+                    [class.is-invalid]="categoryId.invalid && (categoryId.touched || categoryId.dirty)"
+                    [class.is-valid]="categoryId.valid && (categoryId.touched || categoryId.dirty)"
+                >
+                    @for (cat of categories; track cat.id) {
+                        <option [ngValue]="cat.id">{{ cat.categoryName }}</option>
+                    }
+                </select>
+                <label for="category-id">Kategorie</label>
+
+                @if (categoryId.invalid && (categoryId.touched || categoryId.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte eine Kategorie auswählen
+                    </div>
+                }
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg" [disabled]="productForm.invalid">
+                    {{ isEditMode ? 'Produkt speichern' : 'Neues Produkt erstellen' }}
+                </button>
+            </div>
+        </form>
+
+        <a routerLink="/admin/products" class="btn btn-danger btn-sm mt-3">Abbrechen</a>
+    </div>
+</div>
