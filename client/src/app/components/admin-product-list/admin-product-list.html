@@ -1,1 +1,50 @@
-<p>admin-product-list works!</p>
+<h1>Produkte verwalten</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Name</th>
+                <th scope="col">Preis</th>
+                <th scope="col">Bestand</th>
+                <th scope="col">Aktiv</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @for (product of products; track product.id) {
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.unitPrice | currency:'EUR' }}</td>
+                    <td>{{ product.unitsInStock }}</td>
+                    <td>
+                        @if (product.active) {
+                            <i class="bi bi-check"></i> Aktiv
+                        } @else {
+                            <i class="bi bi-x"></i> Inaktiv
+                        }
+                    </td>
+                    <td>
+                        <a [routerLink]="['/admin/products/edit', product.id]" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil"></i> Bearbeiten
+                        </a>
+
+                        <button (click)="deleteProduct(product.id)" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Löschen
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-grid">
+    <a routerLink="/admin/products/new" class="btn btn-success btn-lg">
+        <i class="bi bi-plus-lg"></i> Neues Produkt erstellen
+    </a>
+</div>
