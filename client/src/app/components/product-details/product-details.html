@@ -9,7 +9,14 @@
         </div>
         <div class="col">
             <h1>{{ product.name }}</h1>
-            <p>{{ product.unitPrice | currency:'EUR' }}</p>
+
+            @if (product.salePrice > 0) {
+                <p class="text-danger mb-0">{{ product.salePrice | currency:'EUR' }}</p>
+                <p><s>{{ product.unitPrice | currency:'EUR' }}</s></p>
+            } @else {
+                <p>{{ product.unitPrice | currency:'EUR' }}</p>
+            }
+            
             <button role="button" class="btn btn-primary" (click)="addToCart()">
                 In den Warenkorb
             </button>

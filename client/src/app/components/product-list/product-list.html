@@ -8,7 +8,14 @@
                 </a>
                 <div class="card-body">
                     <h2 class="h5 card-title">{{ tempProduct.name }}</h2>
-                    <p class="card-text">{{ tempProduct.unitPrice | currency:'EUR' }}</p>
+                    <p class="card-text">
+                        @if (tempProduct.salePrice > 0) {
+                            <p class="text-danger mb-0">{{ tempProduct.salePrice | currency:'EUR' }}</p>
+                            <p><s>{{ tempProduct.unitPrice | currency:'EUR' }}</s></p>
+                        } @else {
+                            <p>{{ tempProduct.unitPrice | currency:'EUR' }}</p>
+                        }
+                    </p>
                     <button role="button" class="btn btn-primary" (click)="addToCart(tempProduct)">
                         In den Warenkorb
                     </button>
