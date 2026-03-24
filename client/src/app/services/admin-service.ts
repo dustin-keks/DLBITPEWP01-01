@@ -62,7 +62,7 @@ interface ProductRequest {
   name: string;
   description: string;
   unitPrice: number;
-  salePrice: number;
+  salePrice: number | null;
   imageUrl: string;
   active: boolean;
   unitsInStock: number
