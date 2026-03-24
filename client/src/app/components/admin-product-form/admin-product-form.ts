@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductCategory } from '../../common/product-category';
 import { AdminService } from '../../services/admin-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-product-form',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './admin-product-form.html',
   styleUrl: './admin-product-form.css',
 })
@@ -17,6 +17,7 @@ export class AdminProductForm implements OnInit {
     name: '',
     description: '',
     unitPrice: 0,
+    salePrice: 0,
     imageUrl: '',
     active: true,
     unitsInStock: 0,
@@ -39,6 +40,10 @@ export class AdminProductForm implements OnInit {
     // load all categories for the dropdown list
     this.adminService.getCategories().subscribe(data => {
       this.categories = data;
+
+      if (!this.isEditMode && data.length > 0) {
+        this.product.categoryId = data[0].id;
+      }
     });
 
     // check if URL contains ID for edit mode
@@ -55,6 +60,7 @@ export class AdminProductForm implements OnInit {
           name: data.name,
           description: data.description,
           unitPrice: data.unitPrice,
+          salePrice: data.salePrice ?? 0,
           imageUrl: data.imageUrl,
           active: data.active,
           unitsInStock: data.unitsInStock,

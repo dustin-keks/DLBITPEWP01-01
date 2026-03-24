@@ -19,7 +19,14 @@
                     <td>{{ product.id }}</td>
                     <td>{{ product.sku }}</td>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.unitPrice | currency:'EUR' }}</td>
+                    <td>
+                        @if (product.salePrice > 0) {
+                            <p class="text-danger mb-0">{{ product.salePrice | currency:'EUR' }}</p>
+                            <s>{{ product.unitPrice | currency:'EUR' }}</s>
+                        } @else {
+                            {{ product.unitPrice | currency:'EUR' }}
+                        }
+                    </td>
                     <td>{{ product.unitsInStock }}</td>
                     <td>
                         @if (product.active) {

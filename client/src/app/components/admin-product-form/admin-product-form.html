@@ -83,7 +83,7 @@
             <!-- active -->
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="product-active" name="productActive" [(ngModel)]="product.active">
-                <label class="form-check-label" for="productActive">Aktives Produkt</label>
+                <label class="form-check-label" for="product-active">Aktives Produkt</label>
             </div>
 
             <!-- unitPrice -->
@@ -99,6 +99,23 @@
                 @if (unitPrice.invalid && (unitPrice.touched || unitPrice.dirty)) {
                     <div class="invalid-feedback">
                         Bitte einen gültigen Preis eingeben
+                    </div>
+                }
+            </div>
+
+            <!-- salePrice -->
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="product-sale-price" name="productSalePrice" placeholder="" min="0" step="0.01"
+                    [(ngModel)]="product.salePrice"
+                    #salePrice="ngModel"
+                    [class.is-invalid]="salePrice.invalid && (salePrice.touched || salePrice.dirty)"
+                    [class.is-valid]="salePrice.valid && (salePrice.touched || salePrice.dirty)"
+                >
+                <label for="product-sale-price">Angebots-Preis in Euro</label>
+
+                @if (salePrice.invalid && (salePrice.touched || salePrice.dirty)) {
+                    <div class="invalid-feedback">
+                        Bitte einen gültigen Angebots-Preis eingeben
                     </div>
                 }
             </div>
