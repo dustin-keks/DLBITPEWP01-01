@@ -21,4 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
     // product search ... only active products
     Page<Product> findByNameContainingAndActiveTrue(@Param("name") String name, Pageable pageable);
+
+    // home page ... only active products with sale price
+    Page<Product> findBySalePriceNotNullAndActiveTrue(Pageable pageable);
 }
