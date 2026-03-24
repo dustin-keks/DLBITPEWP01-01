@@ -10,6 +10,7 @@ import { adminGuard } from './guards/admin-guard';
 import { AdminCategoryForm } from './components/admin-category-form/admin-category-form';
 import { AdminProductForm } from './components/admin-product-form/admin-product-form';
 import { AdminProductList } from './components/admin-product-list/admin-product-list';
+import { Home } from './components/home/home';
 
 export const routes: Routes = [
     {path: 'admin/products/edit/:id', component: AdminProductForm, canActivate: [adminGuard]},
@@ -27,6 +28,7 @@ export const routes: Routes = [
     {path: 'category/:id', component: ProductList},
     {path: 'category', component: ProductList},
     {path: 'products', component: ProductList},
-    {path: '', redirectTo: '/products', pathMatch: 'full'},
-    {path: '**', redirectTo: '/products', pathMatch: 'full'}
+    {path: 'home', component: Home},
+    {path: '', redirectTo: '/home', pathMatch: 'full'},
+    {path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];
