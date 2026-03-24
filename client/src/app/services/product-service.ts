@@ -20,6 +20,13 @@ export class ProductService {
     return this.httpClient.get<Product>(productUrl);
   }
 
+  getSaleProductListPaginate(thePage: number, thePageSize: number) {
+    const searchUrl = `${this.baseUrl}/search/findBySalePriceNotNullAndActiveTrue`
+                    + `?page=${thePage}&size=${thePageSize}`;
+    
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+
   getProductListPaginate(thePage: number, 
                         thePageSize: number, 
                         theCategoryId: number): Observable<GetResponseProducts> {

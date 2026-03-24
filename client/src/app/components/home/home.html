@@ -1,1 +1,29 @@
-<p>home works!</p>
+<h1>Startseite: Aktuelle Angebote</h1>
+
+<div class="row">
+    @for (tempProduct of products; track tempProduct.id) {
+        <div class="col-6 col-md-4 col-xl-3">
+            <div class="card mb-3">
+                <a routerLink="/products/{{ tempProduct.id }}">
+                    <img src="{{ tempProduct.imageUrl }}" class="card-img-top" alt="{{ tempProduct.name }}">
+                </a>
+                <div class="card-body">
+                    <h2 class="h5 card-title">{{ tempProduct.name }}</h2>
+                    <div class="card-text">
+                        <p class="text-danger mb-0">{{ tempProduct.salePrice | currency:'EUR' }}</p>
+                        <p><s>{{ tempProduct.unitPrice | currency:'EUR' }}</s></p>
+                    </div>
+                    <button role="button" class="btn btn-primary" (click)="addToCart(tempProduct)">
+                        In den Warenkorb
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @empty {
+        <div class="alert alert-info" role="alert">
+            Aktuell gibt es keine Angebote.
+        </div>
+    }
+</div>
