@@ -106,6 +106,7 @@ public class AdminProductController {
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setUnitPrice(request.getUnitPrice());
+        product.setSalePrice(request.getSalePrice());
         product.setImageUrl(request.getImageUrl());
         product.setActive(request.isActive());
         product.setUnitsInStock(request.getUnitsInStock());
