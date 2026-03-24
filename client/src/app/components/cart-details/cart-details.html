@@ -23,7 +23,12 @@
                             <h2 class="h5">{{ tempCartItem.name }}</h2>
                         </td>
                         <td>
-                            <p>{{ tempCartItem.unitPrice | currency:'EUR' }}</p>
+                            @if (tempCartItem.salePrice > 0) {
+                                <p class="text-danger mb-0">{{ tempCartItem.salePrice | currency:'EUR' }}</p>
+                                <p><s>{{ tempCartItem.unitPrice | currency:'EUR' }}</s></p>
+                            } @else {
+                                <p>{{ tempCartItem.unitPrice | currency:'EUR' }}</p>
+                            }
                         </td>
                         <td>
                             <button class="btn btn-sm btn-primary me-1" (click)="decrementQuantity(tempCartItem)">
@@ -35,7 +40,11 @@
                             </button>
                         </td>
                         <td>
-                            <p>{{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'EUR' }}</p>
+                            @if (tempCartItem.salePrice > 0) {
+                                <p>{{ tempCartItem.quantity * tempCartItem.salePrice | currency: 'EUR' }}</p>
+                            } @else {
+                                <p>{{ tempCartItem.quantity * tempCartItem.unitPrice | currency: 'EUR' }}</p>
+                            }
                         </td>
                         <td>
                             <button class="btn btn-sm btn-danger" (click)="remove(tempCartItem)">

@@ -56,7 +56,11 @@ export class CartService {
     let totalQuantityValue: number = 0;
 
     for (let currentCartItem of this.cartItems) {
-      totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
+      if (currentCartItem.salePrice > 0) {
+        totalPriceValue += currentCartItem.quantity * currentCartItem.salePrice;
+      } else {
+        totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
+      }
       totalQuantityValue += currentCartItem.quantity;
     }
 
