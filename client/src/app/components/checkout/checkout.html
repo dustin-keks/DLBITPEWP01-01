@@ -1,364 +1,368 @@
 <h1 class="border-bottom pb-3 mb-3">Kasse</h1>
 
-<form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
-    <!-- customer -->
-    <div formGroupName="customer">
-        <h2 class="h5">Kundendaten</h2>
-
-        <div class="form-floating mb-3">
-            <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="" 
-                    [class.is-invalid]="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
-                    [class.is-valid]="firstName?.valid && (firstName?.dirty || firstName?.touched)">
-            <label for="first-name">Vorname</label>
-
-            <div class="invalid-feedback"> 
-                @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
-                    Der Vorname ist ein Pflichtfeld.
-                }
-
-                @if (firstName?.errors?.['minlength']) {
-                    Der Vorname muss mindestens 2 Zeichen lang sein.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input formControlName="lastName" type="text" class="form-control" id="last-name" placeholder=""
-                    [class.is-invalid]="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
-                    [class.is-valid]="lastName?.valid && (lastName?.dirty || lastName?.touched)">
-            <label for="last-name">Nachname</label>
-
-            <div class="invalid-feedback"> 
-                @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
-                    Der Nachname ist ein Pflichtfeld.
-                }
-
-                @if (lastName?.errors?.['minlength']) {
-                    Der Nachname muss mindestens 2 Zeichen lang sein.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input formControlName="email" type="email" class="form-control" id="email" placeholder=""
-                    [class.is-invalid]="email?.invalid && (email?.dirty || email?.touched)"
-                    [class.is-valid]="email?.valid && (email?.dirty || email?.touched)">
-            <label for="email">E-Mail</label>
-
-            <div class="invalid-feedback"> 
-                @if (email?.errors?.['required']) {
-                    Die E-Mail-Adresse ist ein Pflichtfeld.
-                }
-
-                @if (email?.errors?.['email']) {
-                    Die E-Mail-Adresse besitzt ein ungültiges Format.
-                }
-            </div>
-        </div>
+@if (!isLoggedIn) {
+    <div class="alert alert-danger" role="alert">
+        Nur registrierte Benutzer können eine Bestellung aufgeben.
     </div>
 
-    <!-- billingAddress -->
-    <div formGroupName="billingAddress">
-        <h2 class="h5">Rechnungsadresse</h2>
-
-        <div class="form-floating mb-3">
-            <input formControlName="street" type="text" class="form-control" id="billing-street" placeholder=""
-                    [class.is-invalid]="billingAddressStreet?.invalid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)"
-                    [class.is-valid]="billingAddressStreet?.valid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)">
-            <label for="billing-street">Straße und Hausnummer</label>
-
-            <div class="invalid-feedback"> 
-                @if (billingAddressStreet?.errors?.['required'] || billingAddressStreet?.errors?.['notOnlyWhitespace']) {
-                    Die Straße ist ein Pflichtfeld.
-                }
-
-                @if (billingAddressStreet?.errors?.['minlength']) {
-                    Die Straße muss mindestens 2 Zeichen lang sein.
-                }
-            </div>
+    <div class="row">
+        <div class="col-auto">
+            <a routerLink="/login" class="btn btn-warning">Ich habe bereits ein Kundenkonto</a>
         </div>
-
-        <div class="form-floating mb-3">
-            <input formControlName="zipCode" type="text" class="form-control" id="billing-plz" placeholder=""
-                    [class.is-invalid]="billingAddressZipCode?.invalid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)"
-                    [class.is-valid]="billingAddressZipCode?.valid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)">
-            <label for="billing-plz">Postleitzahl</label>
-
-            <div class="invalid-feedback"> 
-                @if (billingAddressZipCode?.errors?.['required']) {
-                    Die PLZ ist ein Pflichtfeld.
-                }
-
-                @if (billingAddressZipCode?.errors?.['pattern']) {
-                    Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input formControlName="city" type="text" class="form-control" id="billing-city" placeholder=""
-                    [class.is-invalid]="billingAddressCity?.invalid && (billingAddressCity?.dirty || billingAddressCity?.touched)"
-                    [class.is-valid]="billingAddressCity?.valid && (billingAddressCity?.dirty || billingAddressCity?.touched)">
-            <label for="billing-city">Stadt</label>
-
-            <div class="invalid-feedback"> 
-                @if (billingAddressCity?.errors?.['required'] || billingAddressCity?.errors?.['notOnlyWhitespace']) {
-                    Die Stadt ist ein Pflichtfeld.
-                }
-
-                @if (billingAddressCity?.errors?.['minlength']) {
-                    Die Stadt muss mindestens 2 Zeichen lang sein.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="billing-country" (change)="getStates('billingAddress')"
-                    [class.is-invalid]="billingAddressCountry?.invalid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)"
-                    [class.is-valid]="billingAddressCountry?.valid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)">
-                @for (country of countries; track country.id) {
-                    <option [ngValue]="country">{{ country.name }}</option>
-                }
-            </select>
-            <label for="billing-country">Land</label>
-
-            <div class="invalid-feedback"> 
-                @if (billingAddressCountry?.errors?.['required']) {
-                    Das Land ist ein Pflichtfeld.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <select formControlName="state" class="form-select" id="billing-state"
-                    [class.is-invalid]="billingAddressState?.invalid && (billingAddressState?.dirty || billingAddressState?.touched)"
-                    [class.is-valid]="billingAddressState?.valid && (billingAddressState?.dirty || billingAddressState?.touched)">
-                @for (state of billingAddressStates; track state.id) {
-                    <option [ngValue]="state">{{ state.name }}</option>
-                }
-            </select>
-            <label for="billing-state">Bundesland/Kanton</label>
-
-            <div class="invalid-feedback"> 
-                @if (billingAddressState?.errors?.['required']) {
-                    Bundesland/Kanton ist ein Pflichtfeld.
-                }
-            </div>
+        <div class="col-auto">
+            <a routerLink="/register" class="btn btn-warning">Ich bin Neukunde</a>
         </div>
     </div>
+} @else {
+    <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+        <!-- customer -->
+        <div formGroupName="customer">
+            <h2 class="h5">Kundendaten</h2>
 
-    <!-- shippingAddress -->
-    <div formGroupName="shippingAddress">
-        <h2 class="h5">Lieferadresse</h2>
+            <div class="form-floating mb-3">
+                <input formControlName="firstName" type="text" class="form-control" id="first-name" placeholder="" 
+                        [class.is-invalid]="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+                        [class.is-valid]="firstName?.valid && (firstName?.dirty || firstName?.touched)">
+                <label for="first-name">Vorname</label>
 
-        <div class="form-floating mb-3">
-            <input formControlName="street" type="text" class="form-control" id="shipping-street" placeholder=""
-                    [class.is-invalid]="shippingAddressStreet?.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)"
-                    [class.is-valid]="shippingAddressStreet?.valid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)">
-            <label for="shipping-street">Straße und Hausnummer</label>
+                <div class="invalid-feedback"> 
+                    @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
+                        Der Vorname ist ein Pflichtfeld.
+                    }
 
-            <div class="invalid-feedback"> 
-                @if (shippingAddressStreet?.errors?.['required'] || shippingAddressStreet?.errors?.['notOnlyWhitespace']) {
-                    Die Straße ist ein Pflichtfeld.
-                }
+                    @if (firstName?.errors?.['minlength']) {
+                        Der Vorname muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
 
-                @if (shippingAddressStreet?.errors?.['minlength']) {
-                    Die Straße muss mindestens 2 Zeichen lang sein.
-                }
+            <div class="form-floating mb-3">
+                <input formControlName="lastName" type="text" class="form-control" id="last-name" placeholder=""
+                        [class.is-invalid]="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                        [class.is-valid]="lastName?.valid && (lastName?.dirty || lastName?.touched)">
+                <label for="last-name">Nachname</label>
+
+                <div class="invalid-feedback"> 
+                    @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
+                        Der Nachname ist ein Pflichtfeld.
+                    }
+
+                    @if (lastName?.errors?.['minlength']) {
+                        Der Nachname muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <!-- user is not allowed to change email address -->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="" [value]="userEmail" disabled>
+                <label for="email">E-Mail-Adresse</label>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <input formControlName="zipCode" type="text" class="form-control" id="shipping-plz" placeholder=""
-                    [class.is-invalid]="shippingAddressZipCode?.invalid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)"
-                    [class.is-valid]="shippingAddressZipCode?.valid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)">
-            <label for="shipping-plz">Postleitzahl</label>
+        <!-- billingAddress -->
+        <div formGroupName="billingAddress">
+            <h2 class="h5">Rechnungsadresse</h2>
 
-            <div class="invalid-feedback"> 
-                @if (shippingAddressZipCode?.errors?.['required']) {
-                    Die PLZ ist ein Pflichtfeld.
-                }
+            <div class="form-floating mb-3">
+                <input formControlName="street" type="text" class="form-control" id="billing-street" placeholder=""
+                        [class.is-invalid]="billingAddressStreet?.invalid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)"
+                        [class.is-valid]="billingAddressStreet?.valid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)">
+                <label for="billing-street">Straße und Hausnummer</label>
 
-                @if (shippingAddressZipCode?.errors?.['pattern']) {
-                    Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
-                }
+                <div class="invalid-feedback"> 
+                    @if (billingAddressStreet?.errors?.['required'] || billingAddressStreet?.errors?.['notOnlyWhitespace']) {
+                        Die Straße ist ein Pflichtfeld.
+                    }
+
+                    @if (billingAddressStreet?.errors?.['minlength']) {
+                        Die Straße muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="zipCode" type="text" class="form-control" id="billing-plz" placeholder=""
+                        [class.is-invalid]="billingAddressZipCode?.invalid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)"
+                        [class.is-valid]="billingAddressZipCode?.valid && (billingAddressZipCode?.dirty || billingAddressZipCode?.touched)">
+                <label for="billing-plz">Postleitzahl</label>
+
+                <div class="invalid-feedback"> 
+                    @if (billingAddressZipCode?.errors?.['required']) {
+                        Die PLZ ist ein Pflichtfeld.
+                    }
+
+                    @if (billingAddressZipCode?.errors?.['pattern']) {
+                        Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="city" type="text" class="form-control" id="billing-city" placeholder=""
+                        [class.is-invalid]="billingAddressCity?.invalid && (billingAddressCity?.dirty || billingAddressCity?.touched)"
+                        [class.is-valid]="billingAddressCity?.valid && (billingAddressCity?.dirty || billingAddressCity?.touched)">
+                <label for="billing-city">Stadt</label>
+
+                <div class="invalid-feedback"> 
+                    @if (billingAddressCity?.errors?.['required'] || billingAddressCity?.errors?.['notOnlyWhitespace']) {
+                        Die Stadt ist ein Pflichtfeld.
+                    }
+
+                    @if (billingAddressCity?.errors?.['minlength']) {
+                        Die Stadt muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="country" class="form-select" id="billing-country" (change)="getStates('billingAddress')"
+                        [class.is-invalid]="billingAddressCountry?.invalid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)"
+                        [class.is-valid]="billingAddressCountry?.valid && (billingAddressCountry?.dirty || billingAddressCountry?.touched)">
+                    @for (country of countries; track country.id) {
+                        <option [ngValue]="country">{{ country.name }}</option>
+                    }
+                </select>
+                <label for="billing-country">Land</label>
+
+                <div class="invalid-feedback"> 
+                    @if (billingAddressCountry?.errors?.['required']) {
+                        Das Land ist ein Pflichtfeld.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="state" class="form-select" id="billing-state"
+                        [class.is-invalid]="billingAddressState?.invalid && (billingAddressState?.dirty || billingAddressState?.touched)"
+                        [class.is-valid]="billingAddressState?.valid && (billingAddressState?.dirty || billingAddressState?.touched)">
+                    @for (state of billingAddressStates; track state.id) {
+                        <option [ngValue]="state">{{ state.name }}</option>
+                    }
+                </select>
+                <label for="billing-state">Bundesland/Kanton</label>
+
+                <div class="invalid-feedback"> 
+                    @if (billingAddressState?.errors?.['required']) {
+                        Bundesland/Kanton ist ein Pflichtfeld.
+                    }
+                </div>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <input formControlName="city" type="text" class="form-control" id="shipping-city" placeholder=""
-                    [class.is-invalid]="shippingAddressCity?.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)"
-                    [class.is-valid]="shippingAddressCity?.valid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)">
-            <label for="shipping-city">Stadt</label>
+        <!-- shippingAddress -->
+        <div formGroupName="shippingAddress">
+            <h2 class="h5">Lieferadresse</h2>
 
-            <div class="invalid-feedback"> 
-                @if (shippingAddressCity?.errors?.['required'] || shippingAddressCity?.errors?.['notOnlyWhitespace']) {
-                    Die Stadt ist ein Pflichtfeld.
-                }
+            <div class="form-floating mb-3">
+                <input formControlName="street" type="text" class="form-control" id="shipping-street" placeholder=""
+                        [class.is-invalid]="shippingAddressStreet?.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)"
+                        [class.is-valid]="shippingAddressStreet?.valid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)">
+                <label for="shipping-street">Straße und Hausnummer</label>
 
-                @if (shippingAddressCity?.errors?.['minlength']) {
-                    Die Stadt muss mindestens 2 Zeichen lang sein.
-                }
+                <div class="invalid-feedback"> 
+                    @if (shippingAddressStreet?.errors?.['required'] || shippingAddressStreet?.errors?.['notOnlyWhitespace']) {
+                        Die Straße ist ein Pflichtfeld.
+                    }
+
+                    @if (shippingAddressStreet?.errors?.['minlength']) {
+                        Die Straße muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="zipCode" type="text" class="form-control" id="shipping-plz" placeholder=""
+                        [class.is-invalid]="shippingAddressZipCode?.invalid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)"
+                        [class.is-valid]="shippingAddressZipCode?.valid && (shippingAddressZipCode?.dirty || shippingAddressZipCode?.touched)">
+                <label for="shipping-plz">Postleitzahl</label>
+
+                <div class="invalid-feedback"> 
+                    @if (shippingAddressZipCode?.errors?.['required']) {
+                        Die PLZ ist ein Pflichtfeld.
+                    }
+
+                    @if (shippingAddressZipCode?.errors?.['pattern']) {
+                        Die PLZ muss 4 oder 5 Zeichen lang sein und darf nur aus Zahlen bestehen.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="city" type="text" class="form-control" id="shipping-city" placeholder=""
+                        [class.is-invalid]="shippingAddressCity?.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)"
+                        [class.is-valid]="shippingAddressCity?.valid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)">
+                <label for="shipping-city">Stadt</label>
+
+                <div class="invalid-feedback"> 
+                    @if (shippingAddressCity?.errors?.['required'] || shippingAddressCity?.errors?.['notOnlyWhitespace']) {
+                        Die Stadt ist ein Pflichtfeld.
+                    }
+
+                    @if (shippingAddressCity?.errors?.['minlength']) {
+                        Die Stadt muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="country" class="form-select" id="shipping-country" (change)="getStates('shippingAddress')"
+                        [class.is-invalid]="shippingAddressCountry?.invalid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)"
+                        [class.is-valid]="shippingAddressCountry?.valid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)">
+                    @for (country of countries; track country.id) {
+                        <option [ngValue]="country">{{ country.name }}</option>
+                    }
+                </select>
+                <label for="shipping-country">Land</label>
+
+                <div class="invalid-feedback"> 
+                    @if (shippingAddressCountry?.errors?.['required']) {
+                        Das Land ist ein Pflichtfeld.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="state" class="form-select" id="shipping-state"
+                        [class.is-invalid]="shippingAddressState?.invalid && (shippingAddressState?.dirty || shippingAddressState?.touched)"
+                        [class.is-valid]="shippingAddressState?.valid && (shippingAddressState?.dirty || shippingAddressState?.touched)">
+                    @for (state of shippingAddressStates; track state.id) {
+                        <option [ngValue]="state">{{ state.name }}</option>
+                    }
+                </select>
+                <label for="shipping-state">Bundesland/Kanton</label>
+
+                <div class="invalid-feedback"> 
+                    @if (shippingAddressState?.errors?.['required']) {
+                        Bundesland/Kanton ist ein Pflichtfeld.
+                    }
+                </div>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <select formControlName="country" class="form-select" id="shipping-country" (change)="getStates('shippingAddress')"
-                    [class.is-invalid]="shippingAddressCountry?.invalid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)"
-                    [class.is-valid]="shippingAddressCountry?.valid && (shippingAddressCountry?.dirty || shippingAddressCountry?.touched)">
-                @for (country of countries; track country.id) {
-                    <option [ngValue]="country">{{ country.name }}</option>
-                }
-            </select>
-            <label for="shipping-country">Land</label>
+        <!-- creditCard -->
+        <div formGroupName="creditCard">
+            <h2 class="h5">Kreditkarte</h2>
 
-            <div class="invalid-feedback"> 
-                @if (shippingAddressCountry?.errors?.['required']) {
-                    Das Land ist ein Pflichtfeld.
-                }
+            <div class="form-floating mb-3">
+                <select formControlName="cardType" class="form-select" id="card-type"
+                        [class.is-invalid]="creditCardCardType?.invalid && (creditCardCardType?.dirty || creditCardCardType?.touched)"
+                        [class.is-valid]="creditCardCardType?.valid && (creditCardCardType?.dirty || creditCardCardType?.touched)">
+                    <option value="Visa">Visa</option>
+                    <option value="Master">Master</option>
+                </select>
+                <label for="card-type">Kartentyp</label>
+
+                <div class="invalid-feedback"> 
+                    @if (creditCardCardType?.errors?.['required']) {
+                        Der Kartentyp ist ein Pflichtfeld.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="nameOnCard" type="text" class="form-control" id="cc-name" placeholder=""
+                        [class.is-invalid]="creditCardNameOnCard?.invalid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)"
+                        [class.is-valid]="creditCardNameOnCard?.valid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)">
+                <label for="cc-name">Kartenname</label>
+
+                <div class="invalid-feedback"> 
+                    @if (creditCardNameOnCard?.errors?.['required'] || creditCardNameOnCard?.errors?.['notOnlyWhitespace']) {
+                        Der Kartenname ist ein Pflichtfeld.
+                    }
+
+                    @if (creditCardNameOnCard?.errors?.['minlength']) {
+                        Der Kartenname muss mindestens 2 Zeichen lang sein.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="cardNumber" type="text" class="form-control" id="cc-number" placeholder=""
+                        [class.is-invalid]="creditCardCardNumber?.invalid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)"
+                        [class.is-valid]="creditCardCardNumber?.valid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)">
+                <label for="cc-number">Kartennummer</label>
+
+                <div class="invalid-feedback"> 
+                    @if (creditCardCardNumber?.errors?.['required']) {
+                        Die Kartennummer ist ein Pflichtfeld.
+                    }
+
+                    @if (creditCardCardNumber?.errors?.['pattern']) {
+                        Die Kartennummer muss 16 Zeichen lang sein und darf nur aus Zahlen bestehen.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input formControlName="securityCode" type="text" class="form-control" id="security-code" placeholder=""
+                        [class.is-invalid]="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)"
+                        [class.is-valid]="creditCardSecurityCode?.valid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)">
+                <label for="security-code">Sicherheitscode (3-stellig)</label>
+
+                <div class="invalid-feedback"> 
+                    @if (creditCardSecurityCode?.errors?.['required']) {
+                        Der Sicherheitscode ist ein Pflichtfeld.
+                    }
+
+                    @if (creditCardSecurityCode?.errors?.['pattern']) {
+                        Der Sicherheitscode muss 3 Zeichen lang sein und darf nur aus Zahlen bestehen.
+                    }
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="expirationMonth" class="form-select is-valid" id="expiration-month">
+                    @for (month of creditCardMonths; track $index) {
+                        <option [value]="month">{{ month }}</option>
+                    }
+                </select>
+                <label for="expiration-month">Ablaufdatum Monat</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select formControlName="expirationYear" class="form-select is-valid" id="expiration-year" (change)="handleMonthsAndYears()">
+                    @for (year of creditCardYears; track $index) {
+                        <option [value]="year">{{ year }}</option>
+                    }
+                </select>
+                <label for="expiration-month">Ablaufdatum Jahr</label>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <select formControlName="state" class="form-select" id="shipping-state"
-                    [class.is-invalid]="shippingAddressState?.invalid && (shippingAddressState?.dirty || shippingAddressState?.touched)"
-                    [class.is-valid]="shippingAddressState?.valid && (shippingAddressState?.dirty || shippingAddressState?.touched)">
-                @for (state of shippingAddressStates; track state.id) {
-                    <option [ngValue]="state">{{ state.name }}</option>
-                }
-            </select>
-            <label for="shipping-state">Bundesland/Kanton</label>
+        <div class="row justify-content-end">
+            <div class="col-12 col-sm-6">
+                <dl class="row">
+                    <dt class="col-6">
+                        Versand:
+                    </dt>
+                    <dd class="col-6">
+                        kostenlos
+                    </dd>
 
-            <div class="invalid-feedback"> 
-                @if (shippingAddressState?.errors?.['required']) {
-                    Bundesland/Kanton ist ein Pflichtfeld.
-                }
-            </div>
-        </div>
-    </div>
-
-    <!-- creditCard -->
-    <div formGroupName="creditCard">
-        <h2 class="h5">Kreditkarte</h2>
-
-        <div class="form-floating mb-3">
-            <select formControlName="cardType" class="form-select" id="card-type"
-                    [class.is-invalid]="creditCardCardType?.invalid && (creditCardCardType?.dirty || creditCardCardType?.touched)"
-                    [class.is-valid]="creditCardCardType?.valid && (creditCardCardType?.dirty || creditCardCardType?.touched)">
-                <option value="Visa">Visa</option>
-                <option value="Master">Master</option>
-            </select>
-            <label for="card-type">Kartentyp</label>
-
-            <div class="invalid-feedback"> 
-                @if (creditCardCardType?.errors?.['required']) {
-                    Der Kartentyp ist ein Pflichtfeld.
-                }
+                    <dt class="col-6">
+                        Gesamtanzahl:
+                    </dt>
+                    <dd class="col-6">
+                        {{ totalQuantity }}
+                    </dd>
+                    
+                    <dt class="col-6">
+                        Gesamtsumme:
+                    </dt>
+                    <dd class="col-6">
+                        {{ totalPrice | currency: 'EUR'}}
+                    </dd>
+                </dl>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <input formControlName="nameOnCard" type="text" class="form-control" id="cc-name" placeholder=""
-                    [class.is-invalid]="creditCardNameOnCard?.invalid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)"
-                    [class.is-valid]="creditCardNameOnCard?.valid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)">
-            <label for="cc-name">Kartenname</label>
-
-            <div class="invalid-feedback"> 
-                @if (creditCardNameOnCard?.errors?.['required'] || creditCardNameOnCard?.errors?.['notOnlyWhitespace']) {
-                    Der Kartenname ist ein Pflichtfeld.
-                }
-
-                @if (creditCardNameOnCard?.errors?.['minlength']) {
-                    Der Kartenname muss mindestens 2 Zeichen lang sein.
-                }
-            </div>
+        <div class="alert alert-info">
+            Ich habe die AGBs und Datenschutzerklärung gelesen und stimme diesen zu.
         </div>
 
-        <div class="form-floating mb-3">
-            <input formControlName="cardNumber" type="text" class="form-control" id="cc-number" placeholder=""
-                    [class.is-invalid]="creditCardCardNumber?.invalid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)"
-                    [class.is-valid]="creditCardCardNumber?.valid && (creditCardCardNumber?.dirty || creditCardCardNumber?.touched)">
-            <label for="cc-number">Kartennummer</label>
-
-            <div class="invalid-feedback"> 
-                @if (creditCardCardNumber?.errors?.['required']) {
-                    Die Kartennummer ist ein Pflichtfeld.
-                }
-
-                @if (creditCardCardNumber?.errors?.['pattern']) {
-                    Die Kartennummer muss 16 Zeichen lang sein und darf nur aus Zahlen bestehen.
-                }
-            </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Zahlungspflichtig bestellen</button>
         </div>
-
-        <div class="form-floating mb-3">
-            <input formControlName="securityCode" type="text" class="form-control" id="security-code" placeholder=""
-                    [class.is-invalid]="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)"
-                    [class.is-valid]="creditCardSecurityCode?.valid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)">
-            <label for="security-code">Sicherheitscode (3-stellig)</label>
-
-            <div class="invalid-feedback"> 
-                @if (creditCardSecurityCode?.errors?.['required']) {
-                    Der Sicherheitscode ist ein Pflichtfeld.
-                }
-
-                @if (creditCardSecurityCode?.errors?.['pattern']) {
-                    Der Sicherheitscode muss 3 Zeichen lang sein und darf nur aus Zahlen bestehen.
-                }
-            </div>
-        </div>
-
-        <div class="form-floating mb-3">
-            <select formControlName="expirationMonth" class="form-select is-valid" id="expiration-month">
-                @for (month of creditCardMonths; track $index) {
-                    <option [value]="month">{{ month }}</option>
-                }
-            </select>
-            <label for="expiration-month">Ablaufdatum Monat</label>
-        </div>
-
-        <div class="form-floating mb-3">
-            <select formControlName="expirationYear" class="form-select is-valid" id="expiration-year" (change)="handleMonthsAndYears()">
-                @for (year of creditCardYears; track $index) {
-                    <option [value]="year">{{ year }}</option>
-                }
-            </select>
-            <label for="expiration-month">Ablaufdatum Jahr</label>
-        </div>
-    </div>
-    
-    <div class="row justify-content-end">
-        <div class="col-12 col-sm-6">
-            <dl class="row">
-                <dt class="col-6">
-                    Versand:
-                </dt>
-                <dd class="col-6">
-                    kostenlos
-                </dd>
-
-                <dt class="col-6">
-                    Gesamtanzahl:
-                </dt>
-                <dd class="col-6">
-                    {{ totalQuantity }}
-                </dd>
-                
-                <dt class="col-6">
-                    Gesamtsumme:
-                </dt>
-                <dd class="col-6">
-                    {{ totalPrice | currency: 'EUR'}}
-                </dd>
-            </dl>
-        </div>
-    </div>
-
-    <div class="alert alert-info">
-        Ich habe die AGBs und Datenschutzerklärung gelesen und stimme diesen zu.
-    </div>
-
-    <div class="d-grid">
-        <button type="submit" class="btn btn-success btn-lg">Zahlungspflichtig bestellen</button>
-    </div>
-</form>
+    </form>
+}

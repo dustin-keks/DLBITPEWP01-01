@@ -10,11 +10,12 @@ import { CheckoutService } from '../../services/checkout-service';
 import { Order } from '../../common/order';
 import { OrderItem } from '../../common/order-item';
 import { Purchase } from '../../common/purchase';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, CurrencyPipe],
+  imports: [ReactiveFormsModule, CurrencyPipe, RouterLink],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
@@ -32,11 +33,15 @@ export class Checkout implements OnInit {
   billingAddressStates: State[] = [];
   shippingAddressStates: State[] = [];
 
+  isLoggedIn: boolean = false;
+  userEmail: string = '';
+
   constructor(private formBuilder: FormBuilder,
               private checkoutFormService: CheckoutFormService,
               private cartService: CartService,
               private checkoutService: CheckoutService,
-              private router: Router
+              private router: Router,
+              private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +76,15 @@ export class Checkout implements OnInit {
         expirationYear: ['']
       })
     });
+
+    // check login status and user email address
+    this.authService.isLoggedIn().subscribe(data => {
+      this.isLoggedIn = data;
+    });
+
+    this.authService.getUserEmail().subscribe(data => {
+      this.userEmail = data;
+    })
 
     // populate credit card months
     const startMonth: number = new Date().getMonth() + 1; // months are 0-based
@@ -201,6 +215,9 @@ export class Checkout implements OnInit {
 
     // populate purchase - customer
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
+    // Manually set the email from the auth service because the email field is disabled in the form,
+    // and Angular excludes disabled controls from the form value on submit.
+    purchase.customer.email = this.userEmail;
 
     // populate purchase - billing address
     purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
