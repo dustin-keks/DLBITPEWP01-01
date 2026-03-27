@@ -11,8 +11,14 @@ import { AdminCategoryForm } from './components/admin-category-form/admin-catego
 import { AdminProductForm } from './components/admin-product-form/admin-product-form';
 import { AdminProductList } from './components/admin-product-list/admin-product-list';
 import { Home } from './components/home/home';
+import { Impressum } from './components/impressum/impressum';
+import { Datenschutz } from './components/datenschutz/datenschutz';
+import { AGB } from './components/agb/agb';
 
 export const routes: Routes = [
+    {path: 'impressum', component: Impressum},
+    {path: 'datenschutz', component: Datenschutz},
+    {path: 'agb', component: AGB},
     {path: 'admin/products/edit/:id', component: AdminProductForm, canActivate: [adminGuard]},
     {path: 'admin/products/new', component: AdminProductForm, canActivate: [adminGuard]},
     {path: 'admin/products', component: AdminProductList, canActivate: [adminGuard]},
