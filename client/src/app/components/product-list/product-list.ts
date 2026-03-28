@@ -60,7 +60,7 @@ export class ProductList implements OnInit {
 
     this.previousKeyword = theKeyword;
 
-    console.log(`keyword = ${theKeyword}, thePageNumber = ${this.thePageNumber}`);
+    // console.log(`keyword = ${theKeyword}, thePageNumber = ${this.thePageNumber}`);
 
     // now search for products using keyword
     this.productService.searchProductsPaginate(this.thePageNumber -1,
@@ -95,7 +95,7 @@ export class ProductList implements OnInit {
 
     this.previousCategoryId = this.currentCategoryId;
 
-    console.log(`currentCategoryId = ${this.currentCategoryId}, thePageNumber = ${this.thePageNumber}`);
+    // console.log(`currentCategoryId = ${this.currentCategoryId}, thePageNumber = ${this.thePageNumber}`);
 
     // now get the products for the given category id
     this.productService.getProductListPaginate(this.thePageNumber - 1, // Spring pages are 0 based - Angular pages are 1 based
@@ -119,7 +119,7 @@ export class ProductList implements OnInit {
   }
 
   addToCart(theProduct: Product) {
-    console.log(`Add to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+    // console.log(`Add to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
 
     const theCartItem = new CartItem(theProduct);
 

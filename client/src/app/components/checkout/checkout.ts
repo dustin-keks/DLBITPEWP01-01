@@ -88,11 +88,11 @@ export class Checkout implements OnInit {
 
     // populate credit card months
     const startMonth: number = new Date().getMonth() + 1; // months are 0-based
-    console.log('startMonth: ' + startMonth);
+    // console.log('startMonth: ' + startMonth);
 
     this.checkoutFormService.getCreditCardMonths(startMonth).subscribe(
       data => {
-        console.log('Retrieved credit card months ' + JSON.stringify(data));
+        // console.log('Retrieved credit card months ' + JSON.stringify(data));
         this.creditCardMonths = data;
         this.checkoutFormGroup.get('creditCard')!.get('expirationMonth')!.setValue(data[0]);
       }
@@ -101,7 +101,7 @@ export class Checkout implements OnInit {
     // populate credit card years
     this.checkoutFormService.getCreditCardYears().subscribe(
       data => {
-        console.log('Retrieved credit card years ' + JSON.stringify(data));
+        // console.log('Retrieved credit card years ' + JSON.stringify(data));
         this.creditCardYears = data;
         this.checkoutFormGroup.get('creditCard')!.get('expirationYear')!.setValue(data[0]);
       }
@@ -110,7 +110,7 @@ export class Checkout implements OnInit {
     // populate countries
     this.checkoutFormService.getCountries().subscribe(
       data => {
-        console.log('Retrieved countries: ' + JSON.stringify(data));
+        // console.log('Retrieved countries: ' + JSON.stringify(data));
         this.countries = data;
       }
     )
@@ -189,7 +189,7 @@ export class Checkout implements OnInit {
   }
 
   onSubmit() {
-    console.log('Handling the submit button');
+    // console.log('Handling the submit button');
 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
@@ -283,7 +283,7 @@ export class Checkout implements OnInit {
 
     this.checkoutFormService.getCreditCardMonths(startMonth).subscribe(
       data => {
-        console.log('Retrieved credit card months: ' + JSON.stringify(data));
+        // console.log('Retrieved credit card months: ' + JSON.stringify(data));
         this.creditCardMonths = data;
       }
     );
@@ -295,8 +295,8 @@ export class Checkout implements OnInit {
     const countryCode = formGroup!.value.country.code;
     const countryName = formGroup!.value.country.name;
 
-    console.log(`${formGroupName} country code: ${countryCode}`);
-    console.log(`${formGroupName} country name: ${countryName}`);
+    // console.log(`${formGroupName} country code: ${countryCode}`);
+    // console.log(`${formGroupName} country name: ${countryName}`);
 
     this.checkoutFormService.getStates(countryCode).subscribe(
       data => {
