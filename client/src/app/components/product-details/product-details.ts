@@ -14,6 +14,7 @@ import { CartItem } from '../../common/cart-item';
 })
 export class ProductDetails implements OnInit{
   product!: Product;
+  categoryId: number = 0;
   errorMessage: string = '';
 
   constructor(private productService: ProductService,
@@ -35,6 +36,12 @@ export class ProductDetails implements OnInit{
     this.productService.getProduct(theProductId).subscribe({
       next: data => {
         this.product = data;
+        
+        this.productService.getProductCategory(theProductId).subscribe({
+          next: category => {
+            this.categoryId = category.id;
+          }
+        });
       },
       error: () => {
         this.errorMessage = 'Das Produkt wurde nicht gefunden.';
