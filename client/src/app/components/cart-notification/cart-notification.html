@@ -1,1 +1,7 @@
-<p>cart-notification works!</p>
+@if (visible) {
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <ngb-toast [autohide]="true" [delay]="3000" (hidden)="hide()">
+            <strong>{{ message }}</strong> wurde in den Warenkorb gelegt!
+        </ngb-toast>
+    </div>
+}

@@ -11,6 +11,8 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
+  lastAddedProductName: Subject<string> = new Subject<string>;
+
   storage: Storage = localStorage;
 
   constructor() {
@@ -46,6 +48,9 @@ export class CartService {
       // just add the itemn to the array
       this.cartItems.push(theCartItem);
     }
+
+    // show product name that is added to cart
+    this.lastAddedProductName.next(theCartItem.name);
 
     // compute cart total price and total quantity
     this.computeCartTotals();
