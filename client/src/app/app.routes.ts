@@ -32,8 +32,6 @@ export const routes: Routes = [
     {path: 'products/:id', component: ProductDetails},
     {path: 'search/:keyword', component: ProductList},
     {path: 'category/:id', component: ProductList},
-    {path: 'category', component: ProductList},
-    {path: 'products', component: ProductList},
     {path: 'home', component: Home},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: '**', redirectTo: '/home', pathMatch: 'full'}
