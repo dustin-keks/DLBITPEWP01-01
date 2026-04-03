@@ -84,7 +84,9 @@ export class Checkout implements OnInit {
 
     this.authService.getUserEmail().subscribe(data => {
       this.userEmail = data;
-    })
+      // set email so validation recognizes the value on submit (email field is disabled)
+      this.checkoutFormGroup.get('customer.email')?.setValue(data);
+    });
 
     // populate credit card months
     const startMonth: number = new Date().getMonth() + 1; // months are 0-based
@@ -105,7 +107,7 @@ export class Checkout implements OnInit {
         this.creditCardYears = data;
         this.checkoutFormGroup.get('creditCard')!.get('expirationYear')!.setValue(data[0]);
       }
-    )
+    );
 
     // populate countries
     this.checkoutFormService.getCountries().subscribe(
@@ -113,7 +115,7 @@ export class Checkout implements OnInit {
         // console.log('Retrieved countries: ' + JSON.stringify(data));
         this.countries = data;
       }
-    )
+    );
   }
 
   reviewCartDetails() {
