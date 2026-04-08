@@ -1,4 +1,8 @@
-<h1>{{ currentCategoryName }}</h1>
+@if (searchMode) {
+    <h1>Suchergebnisse für "{{ previousKeyword }}"</h1>
+} @else {
+    <h1>{{ currentCategoryName }}</h1>
+}
 
 <div class="row">
     <!-- loop over products -->
