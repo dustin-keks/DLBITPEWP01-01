@@ -78,6 +78,11 @@ export class ProductService {
       map(response => response._embedded.productCategory)
     );
   }
+
+  getProductCategoryById(theCategoryId: number): Observable<ProductCategory> {
+    const categoryDetailUrl = `${this.categoryUrl}/${theCategoryId}`;
+    return this.httpClient.get<ProductCategory>(categoryDetailUrl);
+  }
 }
 
 interface GetResponseProducts {

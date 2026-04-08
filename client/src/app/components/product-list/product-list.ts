@@ -18,6 +18,7 @@ export class ProductList implements OnInit {
   products: Product[] = [];
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
+  currentCategoryName: string = '';
   searchMode: boolean = false;
 
   // new properties for pagination
@@ -101,6 +102,11 @@ export class ProductList implements OnInit {
     this.productService.getProductListPaginate(this.thePageNumber - 1, // Spring pages are 0 based - Angular pages are 1 based
                                               this.thePageSize,
                                               this.currentCategoryId).subscribe(this.processResult());
+    
+    // get the category name for the current category
+    this.productService.getProductCategoryById(this.currentCategoryId).subscribe(data => {
+      this.currentCategoryName = data.categoryName;
+    });
   }
 
   updatePageSize(pageSize: string) {
