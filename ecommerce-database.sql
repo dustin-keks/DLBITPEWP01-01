@@ -1,3 +1,8 @@
+-- Create application user and grant privileges
+CREATE USER IF NOT EXISTS 'ecommerceapp'@'localhost' IDENTIFIED BY 'ecommerceapp';
+GRANT ALL PRIVILEGES ON `full-stack-ecommerce`.* TO 'ecommerceapp'@'localhost';
+FLUSH PRIVILEGES;
+
 CREATE DATABASE  IF NOT EXISTS `full-stack-ecommerce` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `full-stack-ecommerce`;
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
